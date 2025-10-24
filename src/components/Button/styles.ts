@@ -13,7 +13,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 12,
+    flexShrink: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderRadius: 999,
     gap: 8,
   },
@@ -56,5 +58,13 @@ export const styles = StyleSheet.create({
 
   dangerIconColor: {
     color: colors.danger.base,
+  },
+
+  // Icon-only button styles
+  iconOnly: {
+    width: 48,
+    height: 48,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
   },
 })

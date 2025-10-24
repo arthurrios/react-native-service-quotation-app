@@ -7,7 +7,7 @@ const baseInputStyle: ViewStyle = {
   borderWidth: 1,
   borderRadius: 999,
   paddingHorizontal: 16,
-  paddingVertical: 12,
+  height: 48,
   gap: 8,
 }
 
