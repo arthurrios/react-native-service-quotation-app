@@ -6,7 +6,9 @@ export const Minus = ({
   color = '#000',
   ...props
 }: SvgProps) => (
-  <Svg width={width} height={height} viewBox="0 0 32 24" fill="none" {...props}>
+  <Svg width={width} height={height} viewBox="0 0 32 32" fill="none" {...props}>
+    
     <Path fill={color} d="M26 15a1 1 0 1 1 0 2H6a1 1 0 1 1 0-2z" />
+  
   </Svg>
 )

@@ -24,7 +24,7 @@ const svgFiles = fs
 
 console.log(`Found ${svgFiles.length} SVG files:`, svgFiles)
 
-// Generate icon components using SVGR with custom template
+// Generate icon components using SVGR and adapt to your format
 svgFiles.forEach((iconName) => {
   const svgPath = path.join(ICONS_DIR, `${iconName}.svg`)
   const outputPath = path.join(ICON_COMPONENTS_DIR, `${iconName}.tsx`)
@@ -32,22 +32,58 @@ svgFiles.forEach((iconName) => {
   console.log(`Generating component for ${iconName}...`)
 
   try {
-    // Use SVGR with custom template to match the existing structure
-    const result = execSync(
-      `npx @svgr/cli --native --template ./scripts/icon-template.js "${svgPath}"`,
+    // Use SVGR to generate the basic component
+    const svgrResult = execSync(
+      `npx @svgr/cli --native --typescript "${svgPath}"`,
       {
         encoding: 'utf8',
         cwd: process.cwd(),
       },
     )
 
-    // Write the generated component to the output file
-    fs.writeFileSync(outputPath, result)
+    // Transform the SVGR output to match your format
+    const adaptedComponent = adaptSVGROutput(svgrResult, iconName)
+
+    // Write the adapted component to the output file
+    fs.writeFileSync(outputPath, adaptedComponent)
     console.log(`✅ Generated ${iconName}.tsx`)
   } catch (error) {
     console.error(`❌ Failed to generate ${iconName}:`, error.message)
   }
 })
+
+// Function to adapt SVGR output to your format
+function adaptSVGROutput(svgrOutput, iconName) {
+  const componentName = toPascalCase(iconName)
+
+  // Extract the SVG content from SVGR output
+  const svgMatch = svgrOutput.match(/<Svg[^>]*>([\s\S]*?)<\/Svg>/)
+  if (!svgMatch) {
+    throw new Error('Could not extract SVG content from SVGR output')
+  }
+
+  const svgContent = svgMatch[1]
+  const svgProps = svgrOutput.match(/<Svg([^>]*)>/)?.[1] || ''
+
+  // Extract viewBox from the SVGR output (which should preserve the original)
+  const viewBoxMatch = svgProps.match(/viewBox="([^"]*)"/)
+  const viewBox = viewBoxMatch ? viewBoxMatch[1] : '0 0 32 32'
+
+  // Create the adapted component in your exact format
+  return `import Svg, { Path, SvgProps } from 'react-native-svg'
+
+export const ${componentName} = ({
+  width = 24,
+  height = 24,
+  color = '#000',
+  ...props
+}: SvgProps) => (
+  <Svg width={width} height={height} viewBox="${viewBox}" fill="none" {...props}>
+    ${svgContent.replace(/fill="[^"]*"/g, 'fill={color}').replace(/stroke="[^"]*"/g, 'stroke={color}')}
+  </Svg>
+)
+`
+}
 
 // Generate types file
 const iconNames = svgFiles.map((name) => `'${name}'`).join(' | ')
@@ -75,7 +111,7 @@ const registryImports = svgFiles
   .join('\n')
 
 const registryEntries = svgFiles
-  .map((name) => `  ${name}: ${toPascalCase(name)},`)
+  .map((name) => `  '${name}': ${toPascalCase(name)},`)
   .join('\n')
 
 const registryContent = `${registryImports}
