@@ -11,7 +11,11 @@ function Root({ children, variant = 'primary', ...props }: ButtonRootProps) {
 
   return (
     <ButtonContext.Provider value={{ variant }}>
-      <TouchableOpacity style={containerStyle} {...props}>
+      <TouchableOpacity
+        style={containerStyle}
+        activeOpacity={variant === 'primary' ? 0.7 : 0.2}
+        {...props}
+      >
         {children}
       </TouchableOpacity>
     </ButtonContext.Provider>

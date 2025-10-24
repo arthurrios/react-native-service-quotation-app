@@ -1,5 +1,6 @@
 import { Text, View } from 'react-native'
 import { Button } from '@/components'
+import { Input } from '@/components/Input'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { textStyles } from '@/styles'
 
@@ -10,13 +11,8 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
       <Button.Root onPress={() => navigation.navigate('quoteForm')}>
         <Button.Title>Go to Quote Form</Button.Title>
       </Button.Root>
-      <Button.Root variant="secondary">
-        <Button.Icon name="filter" />
-      </Button.Root>
-      <Button.Root variant="danger">
-        <Button.Icon name="direction-up-right" />
-        <Button.Title>Label</Button.Title>
-      </Button.Root>
+
+      <Input />
     </View>
   )
 }
