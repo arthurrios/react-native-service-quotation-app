@@ -1,52 +1,34 @@
-import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
-import { Icon, IconName } from '../Icon'
-import { styles } from './styles'
+import { Icon } from './components/Icon'
+import { Root } from './components/Root'
+import { Title } from './components/Title'
+import { ButtonProps, IconButtonProps } from './types'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger'
-
-interface BaseButtonProps extends TouchableOpacityProps {
-  variant?: ButtonVariant
-}
-
-interface IconButtonProps extends BaseButtonProps {
-  icon: IconName
-}
-
-interface ButtonProps extends BaseButtonProps {
-  title: string
-  icon?: IconName
-}
-
+// Legacy Button Component (for backward compatibility)
 function Button({ title, variant = 'primary', icon, ...props }: ButtonProps) {
-  const containerStyle = {
-    ...styles.container,
-    ...styles[variant],
-  }
-
-  const textStyle = styles[`${variant}Text`]
-  const iconColor = styles[`${variant}IconColor`].color
-
   return (
-    <TouchableOpacity style={containerStyle} {...props}>
-      {icon && <Icon name={icon} size={24} color={iconColor} />}
-      <Text style={textStyle}>{title}</Text>
-    </TouchableOpacity>
+    <Root variant={variant} {...props}>
+      {icon && <Icon name={icon} />}
+      <Title>{title}</Title>
+    </Root>
   )
 }
+
+// Legacy IconButton Component (for backward compatibility)
 
 function IconButton({ icon, variant = 'primary', ...props }: IconButtonProps) {
-  const containerStyle = {
-    ...styles.container,
-    ...styles[variant],
-  }
-
-  const iconColor = styles[`${variant}IconColor`].color
-
   return (
-    <TouchableOpacity style={containerStyle} {...props}>
-      <Icon name={icon} size={24} color={iconColor} />
-    </TouchableOpacity>
+    <Root variant={variant} {...props}>
+      <Icon name={icon} />
+    </Root>
   )
 }
 
-export { Button, IconButton }
+// Create compound component
+const ButtonCompound = Object.assign(Button, {
+  Root,
+  Icon,
+  Title,
+})
+
+// Export compound component and legacy components
+export { ButtonCompound as Button, IconButton }
