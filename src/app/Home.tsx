@@ -1,4 +1,5 @@
 import { Button, Text, View } from 'react-native'
+import { Check } from '@/assets/icon-components/check'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 
 export function Home({ navigation }: StackRoutesProps<'home'>) {
@@ -9,6 +10,7 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
         title="Go to Quote Form"
         onPress={() => navigation.navigate('quoteForm')}
       />
+      <Check />
     </View>
   )
 }
