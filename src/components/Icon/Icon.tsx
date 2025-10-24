@@ -7,6 +7,7 @@ export const Icon: FC<IconProps> = ({
   width = 24,
   height = 24,
   color = '#000',
+  size = 24,
   ...props
 }) => {
   const IconComponent = iconRegistry[name]
@@ -16,11 +17,14 @@ export const Icon: FC<IconProps> = ({
     return null
   }
 
+  const finalWidth = size || width
+  const finalHeight = size || height
+
   return (
     <IconComponent
       name={name}
-      width={width}
-      height={height}
+      width={finalWidth}
+      height={finalHeight}
       color={color}
       {...props}
     />

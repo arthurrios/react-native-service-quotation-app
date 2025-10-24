@@ -10,6 +10,8 @@ export const colors = {
     base: '#6A46EB',
   },
 
+  white: '#FFFFFF',
+
   // Base Colors (Gray Scale)
   gray: {
     100: '#FAFAFA',
