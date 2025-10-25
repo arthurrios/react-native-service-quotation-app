@@ -102,6 +102,8 @@ export const styles = StyleSheet.create({
     ...textStyles.textMd,
     color: colors.gray[700],
     padding: 0,
+    lineHeight: textStyles.textMd.fontSize * 1.2,
+    textAlignVertical: 'center',
   },
 
   // Percentage variant - centered text
