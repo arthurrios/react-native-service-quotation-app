@@ -2,6 +2,8 @@ import { View } from 'react-native'
 import { Button } from '@/components'
 import { HomeHeader } from '@/components/HomeHeader'
 import { Input } from '@/components/Input'
+import { Status } from '@/components/Status'
+import { StatusType } from '@/components/Status/types'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
 
@@ -24,6 +26,10 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
             <Button.Icon name="filter" />
           </Button.Root>
         </View>
+        <Status status={StatusType.SENT} />
+        <Status status={StatusType.DRAFT} />
+        <Status status={StatusType.APPROVED} />
+        <Status status={StatusType.DECLINED} />
       </View>
     </View>
   )
