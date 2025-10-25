@@ -1,20 +1,12 @@
-import { Text, View } from 'react-native'
-import { Button, Status } from '@/components'
+import { View } from 'react-native'
+import { Button } from '@/components'
 import { HomeHeader } from '@/components/HomeHeader'
 import { Input } from '@/components/Input'
-import { Radio } from '@/components/Radio'
-import { useRadio } from '@/components/Radio/useRadio'
-import { StatusType } from '@/components/Status/types'
+import { MoneyLabel } from '@/components/MoneyLabel'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
 
-const statusOptions = [
-  { value: StatusType.SENT, label: <Status status={StatusType.SENT} /> },
-  { value: StatusType.DRAFT, label: <Status status={StatusType.DRAFT} /> },
-]
-
 export function Home({ navigation }: StackRoutesProps<'home'>) {
-  const { selectedValue, isSelected, select } = useRadio<string>('Radio 1')
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <HomeHeader />
@@ -33,15 +25,15 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
             <Button.Icon name="filter" />
           </Button.Root>
         </View>
-        {statusOptions.map((option) => (
-          <Radio
-            key={option.value}
-            label={option.label}
-            selected={isSelected(option.value)}
-            onSelect={() => select(option.value)}
-          />
-        ))}
-        <Text>{selectedValue}</Text>
+
+        <MoneyLabel value={3847.5} size="lg" />
+
+        <MoneyLabel value={3847.5} />
+
+        <MoneyLabel value={-200} color="danger" />
+        <MoneyLabel value={200} color="success" />
+
+        <MoneyLabel value={4050.0} size="sm" strikethrough />
       </View>
     </View>
   )

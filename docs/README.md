@@ -1,112 +1,133 @@
-# Button Component Documentation
+# Component Documentation
 
-This repository contains comprehensive documentation for creating button components in React Native, available in both Portuguese and English.
+This repository contains comprehensive documentation for creating React Native components, available in both Portuguese and English.
 
 ## 📁 Documentation Structure
 
 ```
 docs/
-├── pt/                          # Portuguese documentation
-│   ├── button-legacy-pattern.md     # Legacy pattern (PT)
-│   └── button-composition-pattern.md # Composition pattern (PT)
-├── en/                          # English documentation
-│   ├── button-legacy-pattern.md     # Legacy pattern (EN)
-│   └── button-composition-pattern.md # Composition pattern (EN)
-└── README.md                    # This file
+├── pt/                              # Portuguese documentation
+│   ├── button-legacy-pattern.md         # Button legacy pattern (PT)
+│   ├── button-composition-pattern.md    # Button composition pattern (PT)
+│   ├── checkbox-guide.md                # Checkbox guide (PT)
+│   ├── input-guide.md                   # Input guide (PT)
+│   ├── radio-guide.md                   # Radio guide (PT)
+│   └── money-label-guide.md             # MoneyLabel guide (PT)
+├── en/                              # English documentation
+│   ├── button-legacy-pattern.md         # Button legacy pattern (EN)
+│   ├── button-composition-pattern.md    # Button composition pattern (EN)
+│   ├── checkbox-guide.md                # Checkbox guide (EN)
+│   ├── input-guide.md                   # Input guide (EN)
+│   ├── radio-guide.md                   # Radio guide (EN)
+│   └── money-label-guide.md             # MoneyLabel guide (EN)
+└── README.md                        # This file
 ```
 
 ## 🎯 Documentation Overview
 
-### Legacy Pattern
-- **Target Audience**: Beginner developers
-- **Focus**: Simplicity and ease of use
-- **Structure**: Single file with everything centralized
-- **Advantages**: Quick to implement, easy to understand
-- **Ideal for**: MVPs, prototypes, small projects
+This documentation covers multiple React Native components with different complexity levels and patterns.
 
-### Composition Pattern
-- **Target Audience**: Intermediate/Advanced developers
-- **Focus**: Maximum flexibility and reusability
-- **Structure**: Organized in folders (components/, hooks/, types/)
-- **Advantages**: Automatic variant inheritance, maximum flexibility
-- **Ideal for**: Large projects, complex design systems
+### Button Components
+- **Legacy Pattern**: Simple, single-file approach for beginners
+- **Composition Pattern**: Advanced, flexible approach for complex projects
+
+### Form Components
+- **Checkbox**: Multiple selection with custom hook
+- **Radio**: Single selection with custom hook
+- **Input**: Flexible input with composition pattern
+
+### Display Components
+- **MoneyLabel**: Currency display with variants and formatting
 
 ## 📚 Available Documents
 
 ### Portuguese (PT)
-- [Padrão Legado](./pt/button-legacy-pattern.md) - Como criar um componente de botão usando o padrão legado
-- [Padrão de Composição](./pt/button-composition-pattern.md) - Como criar um componente de botão usando o padrão de composição
+- [Botão - Padrão Legado](./pt/button-legacy-pattern.md)
+- [Botão - Padrão de Composição](./pt/button-composition-pattern.md)
+- [Checkbox](./pt/checkbox-guide.md)
+- [Input](./pt/input-guide.md)
+- [Radio](./pt/radio-guide.md)
+- [MoneyLabel](./pt/money-label-guide.md)
 
 ### English (EN)
-- [Legacy Pattern](./en/button-legacy-pattern.md) - How to create a button component using the legacy pattern
-- [Composition Pattern](./en/button-composition-pattern.md) - How to create a button component using the composition pattern
+- [Button - Legacy Pattern](./en/button-legacy-pattern.md)
+- [Button - Composition Pattern](./en/button-composition-pattern.md)
+- [Checkbox](./en/checkbox-guide.md)
+- [Input](./en/input-guide.md)
+- [Radio](./en/radio-guide.md)
+- [MoneyLabel](./en/money-label-guide.md)
 
 ## 🚀 Quick Start
 
-### For Beginners
-1. Start with the **Legacy Pattern** documentation
-2. Choose your preferred language (PT/EN)
-3. Follow the step-by-step implementation
-4. Use the provided examples
+### Choose Your Component
 
-### For Advanced Users
-1. Go directly to the **Composition Pattern** documentation
-2. Choose your preferred language (PT/EN)
-3. Implement the organized structure
-4. Leverage the advanced features
+1. **Form Inputs**: Checkbox, Radio, Input
+   - Start with these for building forms
+   - Each has custom hooks for state management
+   
+2. **Display Elements**: MoneyLabel
+   - For displaying formatted currency values
+   - Multiple size and color variants
 
-## 🎨 Pattern Comparison
+3. **Interactive Elements**: Button
+   - Choose Legacy Pattern for simplicity
+   - Choose Composition Pattern for flexibility
 
-| Feature | Legacy Pattern | Composition Pattern |
-|---------|----------------|-------------------|
-| **Complexity** | Simple | Advanced |
-| **Flexibility** | Limited | Maximum |
-| **Setup Time** | Quick | Moderate |
-| **Maintenance** | Easy | Structured |
-| **Reusability** | Basic | High |
-| **Type Safety** | Good | Excellent |
+### By Experience Level
+
+**Beginners**:
+- Start with Legacy Button Pattern
+- Learn Checkbox and Radio basics
+- Use MoneyLabel for display
+
+**Intermediate**:
+- Explore Composition Button Pattern
+- Master Input component variants
+- Use custom hooks for complex forms
+
+**Advanced**:
+- Customize all components
+- Create new variants
+- Build complex form flows
 
 ## 📖 Usage Examples
 
-### Legacy Pattern
+### Button Components
 ```tsx
-// Simple usage
+// Legacy Pattern
 <Button title="Save" variant="primary" onPress={handleSave} />
-<IconButton icon="check" variant="primary" onPress={handleSave} />
-```
 
-### Composition Pattern
-```tsx
-// Flexible composition
+// Composition Pattern
 <Button.Root variant="primary" onPress={handleSave}>
   <Button.Icon name="check" />
   <Button.Title>Save</Button.Title>
 </Button.Root>
 ```
 
-## 🔧 Customization
+### Form Components
+```tsx
+// Checkbox with custom hook
+const { isChecked, toggle } = useCheckbox<string>()
+<Checkbox label="Option" checked={isChecked(value)} onToggle={() => toggle(value)} />
 
-Both patterns support:
-- ✅ Multiple variants (primary, secondary, danger)
-- ✅ Icon integration
-- ✅ Size customization
-- ✅ TypeScript support
-- ✅ Theme integration
+// Radio with custom hook
+const { isSelected, select } = useRadio<string>()
+<Radio label="Option" selected={isSelected(value)} onSelect={() => select(value)} />
 
-## 🎯 When to Use Each Pattern
+// Input with composition
+<Input.Root variant="empty">
+  <Input.Icon name="search" />
+  <Input.Field placeholder="Search..." />
+</Input.Root>
+```
 
-### Use Legacy Pattern When:
-- Building a small to medium project
-- Working with a beginner team
-- Creating prototypes or MVPs
-- Need a quick and simple solution
-
-### Use Composition Pattern When:
-- Building a large and complex project
-- Working with an experienced team
-- Need maximum flexibility
-- Creating a complex design system
-- Components will be extensively reused
+### Display Components
+```tsx
+// MoneyLabel with variants
+<MoneyLabel value={3847.50} size="lg" />
+<MoneyLabel value={-200} color="danger" />
+<MoneyLabel value={4050.00} strikethrough />
+```
 
 ## 📝 Contributing
 
@@ -119,4 +140,11 @@ If you find any issues or want to improve the documentation:
 
 ## 🎯 Conclusion
 
-Both patterns are valid and serve different purposes. Choose the one that best fits your project needs and team experience level. The documentation provides comprehensive guides to implement either pattern successfully.
+This documentation provides comprehensive guides for creating React Native components with different complexity levels and patterns:
+
+- **Button**: Two patterns (Legacy and Composition) for different needs
+- **Checkbox & Radio**: Custom hooks for state management
+- **Input**: Flexible composition pattern
+- **MoneyLabel**: Currency display with variants
+
+Each component is fully typed with TypeScript and follows React Native best practices. Choose the component and pattern that best fits your project needs.
