@@ -41,8 +41,8 @@ Input/
 import { DimensionValue, TextInputProps } from 'react-native'
 import { IconName } from '@/components/Icon'
 
-// Input variants (empty, filled, danger, percentage)
-export type InputVariant = 'empty' | 'filled' | 'danger' | 'percentage'
+// Input variants (empty, filled, danger, percentage, currency, quantity, textarea)
+export type InputVariant = 'empty' | 'filled' | 'danger' | 'percentage' | 'currency' | 'quantity' | 'textarea'
 
 // Input states (default, focus)
 export type InputState = 'default' | 'focus'
@@ -96,13 +96,21 @@ export interface InputProps extends BaseInputProps {
   suffix?: string
   placeholder?: string
   width?: DimensionValue
+  value?: number | string
+  onChangeValue?: (value: number | string) => void
+  rows?: number
+  min?: number
+  max?: number
+  step?: number
+  disabled?: boolean
 }
 ```
 
 **Explanation:**
-- `InputVariant`: Defines the 4 different visual styles
+- `InputVariant`: Defines the 7 different visual styles (empty, filled, danger, percentage, currency, quantity, textarea)
 - `InputState`: Controls focus state
 - `BaseInputProps`: Inherits TextInput props but customizes onFocus/onBlur
+- `InputProps`: Simplified interface with unified `onChangeValue` that accepts `string | number`
 - Each component has its own props but can inherit from context
 
 ### 2. Create Context
@@ -408,6 +416,20 @@ export const styles = StyleSheet.create({
     borderColor: colors.gray[300],
   },
 
+  currency: {},
+
+  quantity: {
+    paddingHorizontal: 8,
+  },
+
+  textarea: {
+    height: 'auto',
+    minHeight: 80,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 20,
+  },
+
   // Focus state
   focus: {
     borderColor: colors.purple.base,
@@ -449,6 +471,28 @@ export const styles = StyleSheet.create({
     color: colors.gray[700],
     padding: 0,
     textAlign: 'center',
+  },
+
+  // Currency variant - text input style
+  currencyTextInput: {
+    flex: 1,
+    ...textStyles.textMd,
+    color: colors.gray[700],
+    padding: 0,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    margin: 0,
+    lineHeight: textStyles.textMd.fontSize * 1.2,
+    textAlignVertical: 'center',
+  },
+
+  // Textarea variant
+  textareaInput: {
+    flex: 1,
+    ...textStyles.textMd,
+    color: colors.gray[700],
+    padding: 0,
+    textAlignVertical: 'top',
   },
 
   prefixText: {
@@ -504,6 +548,15 @@ import { Input } from '@/components'
   <Input.Field placeholder="0" />
 </Input.Root>
 
+// Currency input (with react-native-currency-input)
+<Input variant="currency" placeholder="0,00" value={price} onChangeValue={setPrice} />
+
+// Quantity selector (with +/- buttons)
+<Input variant="quantity" value={quantity} onChangeValue={setQuantity} min={1} max={99} />
+
+// Textarea (multi-line with custom border radius)
+<Input variant="textarea" placeholder="Describe your service..." rows={4} value={description} onChangeValue={(value) => setDescription(String(value))} />
+
 // Everything together
 <Input.Root variant="empty">
   <Input.Icon name="credit-card" />
@@ -529,9 +582,38 @@ import { Input } from '@/components'
 
 // Percentage
 <Input variant="percentage" placeholder="0" />
+
+// Currency
+<Input variant="currency" placeholder="0,00" value={price} onChangeValue={setPrice} />
+
+// Quantity
+<Input variant="quantity" value={quantity} onChangeValue={setQuantity} min={1} max={99} />
+
+// Textarea (with type conversion)
+<Input variant="textarea" placeholder="Describe your service..." rows={4} value={description} onChangeValue={(value) => setDescription(String(value))} />
 ```
 
 ## 🔍 Important Concepts
+
+### Simplified Type System
+
+The Input component uses a unified `onChangeValue?: (value: number | string) => void` prop for all variants. This simplifies the component internally while allowing consumers to handle type conversion as needed:
+
+```tsx
+// For textarea (string-only state)
+<Input 
+  variant="textarea" 
+  value={description} 
+  onChangeValue={(value) => setDescription(String(value))} 
+/>
+
+// For currency/quantity (number | string state)
+<Input 
+  variant="currency" 
+  value={price} 
+  onChangeValue={setPrice} 
+/>
+```
 
 ### State Management
 
@@ -567,16 +649,21 @@ But can override if needed.
 2. **Automatic Inheritance**: Variant and state propagate automatically
 3. **Type Safety**: TypeScript prevents errors
 4. **Reusability**: Use parts individually
-5. **Variants**: 4 ready-to-use styles (empty, filled, danger, percentage)
+5. **Variants**: 7 ready-to-use styles (empty, filled, danger, percentage, currency, quantity, textarea)
 6. **Visual Feedback**: Focus state changes colors automatically
+7. **Specialized Inputs**: Currency formatting, quantity selectors, multi-line text areas
+8. **Simplified API**: Unified `onChangeValue` prop reduces complexity
+9. **Consumer Control**: Type conversion handled at the call site for clarity
 
 ## 🎯 Conclusion
 
 The Input component offers:
 - **Composition pattern** for maximum flexibility
 - **Automatic inheritance** of variants and states
-- **4 variants** ready for use
+- **7 variants** ready for use (empty, filled, danger, percentage, currency, quantity, textarea)
 - **Visual feedback** on focus
 - **Dual API**: Composition + Legacy
+- **Specialized inputs**: Currency formatting, quantity selectors, multi-line text areas
+- **Simplified type system**: Unified `onChangeValue` prop with consumer-controlled type conversion
 
-Ideal for complex forms, monetary value inputs, percentages, and any case where you need maximum control over layout.
+Ideal for complex forms, monetary value inputs, percentages, quantity selection, multi-line text, and any case where you need maximum control over layout. The simplified API reduces internal complexity while maintaining full functionality.

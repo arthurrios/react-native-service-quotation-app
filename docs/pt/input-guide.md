@@ -41,8 +41,8 @@ Input/
 import { DimensionValue, TextInputProps } from 'react-native'
 import { IconName } from '@/components/Icon'
 
-// Variantes do input (empty, filled, danger, percentage)
-export type InputVariant = 'empty' | 'filled' | 'danger' | 'percentage'
+// Variantes do input (empty, filled, danger, percentage, currency, quantity, textarea)
+export type InputVariant = 'empty' | 'filled' | 'danger' | 'percentage' | 'currency' | 'quantity' | 'textarea'
 
 // Estados do input (default, focus)
 export type InputState = 'default' | 'focus'
@@ -96,13 +96,21 @@ export interface InputProps extends BaseInputProps {
   suffix?: string
   placeholder?: string
   width?: DimensionValue
+  value?: number | string
+  onChangeValue?: (value: number | string) => void
+  rows?: number
+  min?: number
+  max?: number
+  step?: number
+  disabled?: boolean
 }
 ```
 
 **Explicação:**
-- `InputVariant`: Define os 4 estilos visuais diferentes
+- `InputVariant`: Define os 7 estilos visuais diferentes (empty, filled, danger, percentage, currency, quantity, textarea)
 - `InputState`: Controla o estado de foco
 - `BaseInputProps`: Herda props do TextInput mas customiza onFocus/onBlur
+- `InputProps`: Interface simplificada com `onChangeValue` unificado que aceita `string | number`
 - Cada componente tem props próprias mas pode herdar de context
 
 ### 2. Criar Context

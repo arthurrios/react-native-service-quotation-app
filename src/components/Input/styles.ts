@@ -122,6 +122,8 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 0,
     margin: 0,
+    lineHeight: textStyles.textMd.fontSize * 1.2,
+    textAlignVertical: 'center',
   },
 
   // Textarea variant

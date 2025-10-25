@@ -34,7 +34,7 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
             placeholder="Describe your service..."
             rows={4}
             value={description}
-            onChangeValue={(value) => setDescription(value as string)}
+            onChangeValue={(value) => setDescription(String(value))}
           />
 
           <View style={{ marginTop: 24, flexDirection: 'row', gap: 8 }}>

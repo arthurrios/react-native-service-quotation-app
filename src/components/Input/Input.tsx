@@ -29,7 +29,9 @@ function Input({
   // Handle currency variant with CurrencyInput
   if (variant === 'currency') {
     const handleCurrencyChange = (newValue: number | null) => {
-      onChangeValue?.(newValue ?? '')
+      onChangeValue?.(
+        newValue !== null && newValue !== undefined ? String(newValue) : '',
+      )
     }
 
     return (
@@ -53,6 +55,27 @@ function Input({
           placeholderTextColor={styles.placeholderText.color}
           onFocus={onFocus}
           onBlur={onBlur}
+        />
+      </Root>
+    )
+  }
+
+  // Handle textarea variant
+  if (variant === 'textarea') {
+    return (
+      <Root
+        variant={variant}
+        width={width}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        {...props}
+      >
+        <Field
+          placeholder={placeholder}
+          value={value}
+          onChangeValue={onChangeValue}
+          rows={rows}
+          disabled={disabled}
         />
       </Root>
     )

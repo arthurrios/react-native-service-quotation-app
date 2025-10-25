@@ -42,6 +42,31 @@ export interface InputFieldProps extends Omit<TextInputProps, 'value'> {
   disabled?: boolean
 }
 
+// Specific types for different variants
+export interface TextareaInputProps
+  extends Omit<InputFieldProps, 'value' | 'onChangeValue'> {
+  variant: 'textarea'
+  value?: string
+  onChangeValue?: (value: string) => void
+}
+
+export interface CurrencyInputProps
+  extends Omit<InputFieldProps, 'value' | 'onChangeValue'> {
+  variant: 'currency'
+  value?: number | string
+  onChangeValue?: (value: number | string) => void
+}
+
+export interface QuantityInputProps
+  extends Omit<InputFieldProps, 'value' | 'onChangeValue'> {
+  variant: 'quantity'
+  value?: number | string
+  onChangeValue?: (value: number | string) => void
+  min?: number
+  max?: number
+  step?: number
+}
+
 export interface InputPrefixProps {
   children: React.ReactNode
   variant?: InputVariant
