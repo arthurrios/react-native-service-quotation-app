@@ -1,46 +1,20 @@
 import { Text, View } from 'react-native'
-import { Button } from '@/components'
-import { Checkbox } from '@/components/Checkbox'
-import { useCheckbox } from '@/components/Checkbox/useCheckbox'
+import { Button, Status } from '@/components'
 import { HomeHeader } from '@/components/HomeHeader'
 import { Input } from '@/components/Input'
-import { Status } from '@/components/Status'
+import { Radio } from '@/components/Radio'
+import { useRadio } from '@/components/Radio/useRadio'
 import { StatusType } from '@/components/Status/types'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
 
-const statusItems = [
+const statusOptions = [
   { value: StatusType.SENT, label: <Status status={StatusType.SENT} /> },
   { value: StatusType.DRAFT, label: <Status status={StatusType.DRAFT} /> },
-  {
-    value: StatusType.APPROVED,
-    label: <Status status={StatusType.APPROVED} />,
-  },
-  {
-    value: StatusType.DECLINED,
-    label: <Status status={StatusType.DECLINED} />,
-  },
-]
-
-const serviceItems = [
-  { value: 'installation', label: 'Instalação' },
-  { value: 'maintenance', label: 'Manutenção' },
-  { value: 'cleaning', label: 'Limpeza' },
-  { value: 'repair', label: 'Reparo' },
 ]
 
 export function Home({ navigation }: StackRoutesProps<'home'>) {
-  const {
-    checkedValues: checkedStatus,
-    isChecked: isStatusChecked,
-    toggle: toggleStatus,
-  } = useCheckbox<StatusType>()
-
-  const {
-    checkedValues: checkedServices,
-    isChecked: isServiceChecked,
-    toggle: toggleService,
-  } = useCheckbox<string>()
+  const { selectedValue, isSelected, select } = useRadio<string>('Radio 1')
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <HomeHeader />
@@ -59,41 +33,15 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
             <Button.Icon name="filter" />
           </Button.Root>
         </View>
-
-        {statusItems.map((item) => (
-          <Checkbox
-            key={item.value}
-            label={item.label}
-            checked={isStatusChecked(item.value)}
-            onToggle={() => toggleStatus(item.value)}
+        {statusOptions.map((option) => (
+          <Radio
+            key={option.value}
+            label={option.label}
+            selected={isSelected(option.value)}
+            onSelect={() => select(option.value)}
           />
         ))}
-
-        <Text>Status Selecionados: {checkedStatus.join(', ')}</Text>
-
-        <View style={{ marginTop: 32 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 'bold',
-              marginBottom: 12,
-              color: colors.gray[700],
-            }}
-          >
-            Serviços:
-          </Text>
-          {serviceItems.map((item) => (
-            <Checkbox
-              key={item.value}
-              label={item.label}
-              checked={isServiceChecked(item.value)}
-              onToggle={() => toggleService(item.value)}
-            />
-          ))}
-          <Text style={{ marginTop: 12 }}>
-            Serviços Selecionados: {checkedServices.join(', ')}
-          </Text>
-        </View>
+        <Text>{selectedValue}</Text>
       </View>
     </View>
   )
