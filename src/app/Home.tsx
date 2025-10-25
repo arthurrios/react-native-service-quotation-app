@@ -10,13 +10,24 @@ import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
 
 const statusItems = [
-  StatusType.SENT,
-  StatusType.DRAFT,
-  StatusType.APPROVED,
-  StatusType.DECLINED,
+  { value: StatusType.SENT, label: <Status status={StatusType.SENT} /> },
+  { value: StatusType.DRAFT, label: <Status status={StatusType.DRAFT} /> },
+  {
+    value: StatusType.APPROVED,
+    label: <Status status={StatusType.APPROVED} />,
+  },
+  {
+    value: StatusType.DECLINED,
+    label: <Status status={StatusType.DECLINED} />,
+  },
 ]
 
-const serviceItems = ['installation', 'maintenance', 'cleaning', 'repair']
+const serviceItems = [
+  { value: 'installation', label: 'Instalação' },
+  { value: 'maintenance', label: 'Manutenção' },
+  { value: 'cleaning', label: 'Limpeza' },
+  { value: 'repair', label: 'Reparo' },
+]
 
 export function Home({ navigation }: StackRoutesProps<'home'>) {
   const {
@@ -49,12 +60,12 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
           </Button.Root>
         </View>
 
-        {statusItems.map((status) => (
+        {statusItems.map((item) => (
           <Checkbox
-            key={status}
-            label={<Status status={status} />}
-            checked={isStatusChecked(status)}
-            onToggle={() => toggleStatus(status)}
+            key={item.value}
+            label={item.label}
+            checked={isStatusChecked(item.value)}
+            onToggle={() => toggleStatus(item.value)}
           />
         ))}
 
@@ -71,20 +82,12 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
           >
             Serviços:
           </Text>
-          {serviceItems.map((service) => (
+          {serviceItems.map((item) => (
             <Checkbox
-              key={service}
-              label={
-                service === 'installation'
-                  ? 'Instalação'
-                  : service === 'maintenance'
-                    ? 'Manutenção'
-                    : service === 'cleaning'
-                      ? 'Limpeza'
-                      : 'Reparo'
-              }
-              checked={isServiceChecked(service)}
-              onToggle={() => toggleService(service)}
+              key={item.value}
+              label={item.label}
+              checked={isServiceChecked(item.value)}
+              onToggle={() => toggleService(item.value)}
             />
           ))}
           <Text style={{ marginTop: 12 }}>

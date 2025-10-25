@@ -331,6 +331,47 @@ export type { UseCheckboxReturn } from './useCheckbox'
 
 ### Exemplo 1: Valores Simples (String)
 
+#### Abordagem Simplificada (Recomendada)
+
+```tsx
+import { Checkbox } from '@/components/Checkbox'
+import { useCheckbox } from '@/components/Checkbox/useCheckbox'
+
+// Define dados com value e label juntos
+const serviceItems = [
+  { value: 'installation', label: 'Instalação' },
+  { value: 'maintenance', label: 'Manutenção' },
+  { value: 'cleaning', label: 'Limpeza' },
+  { value: 'repair', label: 'Reparo' },
+]
+
+function MyComponent() {
+  const { checkedValues, isChecked, toggle } = useCheckbox<string>()
+
+  return (
+    <View>
+      {serviceItems.map((item) => (
+        <Checkbox
+          key={item.value}
+          label={item.label}
+          checked={isChecked(item.value)}
+          onToggle={() => toggle(item.value)}
+        />
+      ))}
+      <Text>Selecionados: {checkedValues.join(', ')}</Text>
+    </View>
+  )
+}
+```
+
+**Vantagens:**
+- ✅ Labels já vêm prontos, sem lógica adicional na view
+- ✅ Código mais limpo e fácil de manter
+- ✅ Facilita adicionar/remover itens
+- ✅ Centraliza mapeamento de valores para labels
+
+#### Abordagem Tradicional
+
 ```tsx
 import { Checkbox } from '@/components/Checkbox'
 import { useCheckbox } from '@/components/Checkbox/useCheckbox'
@@ -340,12 +381,22 @@ const services = ['installation', 'maintenance', 'cleaning']
 function MyComponent() {
   const { checkedValues, isChecked, toggle } = useCheckbox<string>()
 
+  // Mapeamento de valores para labels
+  const getLabel = (service: string) => {
+    switch (service) {
+      case 'installation': return 'Instalação'
+      case 'maintenance': return 'Manutenção'
+      case 'cleaning': return 'Limpeza'
+      default: return service
+    }
+  }
+
   return (
     <View>
       {services.map((service) => (
         <Checkbox
           key={service}
-          label={service}
+          label={getLabel(service)}
           checked={isChecked(service)}
           onToggle={() => toggle(service)}
         />
@@ -357,6 +408,48 @@ function MyComponent() {
 ```
 
 ### Exemplo 2: Valores com Enums
+
+#### Abordagem Simplificada (Recomendada)
+
+```tsx
+import { Checkbox } from '@/components/Checkbox'
+import { useCheckbox } from '@/components/Checkbox/useCheckbox'
+import { Status, StatusType } from '@/components/Status'
+
+// Define dados com value e label juntos
+const statusItems = [
+  { value: StatusType.SENT, label: <Status status={StatusType.SENT} /> },
+  { value: StatusType.DRAFT, label: <Status status={StatusType.DRAFT} /> },
+  { value: StatusType.APPROVED, label: <Status status={StatusType.APPROVED} /> },
+  { value: StatusType.DECLINED, label: <Status status={StatusType.DECLINED} /> },
+]
+
+function MyComponent() {
+  const { checkedValues, isChecked, toggle } = useCheckbox<StatusType>()
+
+  return (
+    <View>
+      {statusItems.map((item) => (
+        <Checkbox
+          key={item.value}
+          label={item.label}
+          checked={isChecked(item.value)}
+          onToggle={() => toggle(item.value)}
+        />
+      ))}
+      <Text>Status: {checkedValues.join(', ')}</Text>
+    </View>
+  )
+}
+```
+
+**Vantagens:**
+- ✅ Componentes React como labels já preparados
+- ✅ Não precisa criar o componente no map
+- ✅ Código mais conciso e legível
+- ✅ Fácil centralizar a configuração
+
+#### Abordagem Tradicional
 
 ```tsx
 import { Checkbox } from '@/components/Checkbox'
