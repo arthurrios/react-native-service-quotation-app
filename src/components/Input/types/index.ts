@@ -1,11 +1,18 @@
 import { DimensionValue, TextInputProps } from 'react-native'
 import { IconName } from '@/components/Icon'
 
-export type InputVariant = 'empty' | 'filled' | 'danger' | 'percentage'
+export type InputVariant =
+  | 'empty'
+  | 'filled'
+  | 'danger'
+  | 'percentage'
+  | 'textarea'
+  | 'currency'
+  | 'quantity'
 export type InputState = 'default' | 'focus'
 
 export interface BaseInputProps
-  extends Omit<TextInputProps, 'onFocus' | 'onBlur'> {
+  extends Omit<TextInputProps, 'onFocus' | 'onBlur' | 'value'> {
   variant?: InputVariant
   onFocus?: () => void
   onBlur?: () => void
@@ -23,9 +30,16 @@ export interface InputIconProps {
   size?: number
 }
 
-export interface InputFieldProps extends TextInputProps {
+export interface InputFieldProps extends Omit<TextInputProps, 'value'> {
   variant?: InputVariant
   state?: InputState
+  value?: number | string
+  onChangeValue?: (value: number | string) => void
+  rows?: number
+  min?: number
+  max?: number
+  step?: number
+  disabled?: boolean
 }
 
 export interface InputPrefixProps {
@@ -47,4 +61,11 @@ export interface InputProps extends BaseInputProps {
   suffix?: string
   placeholder?: string
   width?: DimensionValue
+  value?: number | string
+  onChangeValue?: (value: number | string) => void
+  rows?: number
+  min?: number
+  max?: number
+  step?: number
+  disabled?: boolean
 }

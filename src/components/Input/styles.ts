@@ -36,6 +36,20 @@ export const styles = StyleSheet.create({
     borderColor: colors.gray[300],
   },
 
+  textarea: {
+    height: 'auto',
+    minHeight: 80,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 20,
+  },
+
+  currency: {},
+
+  quantity: {
+    paddingHorizontal: 8,
+  },
+
   // State Styles
   focus: {
     borderColor: colors.purple.base,
@@ -74,6 +88,14 @@ export const styles = StyleSheet.create({
     color: colors.purple.base,
   },
 
+  quantityNestedComponentColor: {
+    color: colors.purple.base,
+  },
+
+  quantityFocusNestedComponentColor: {
+    color: colors.purple.base,
+  },
+
   // Text input styles
   textInput: {
     flex: 1,
@@ -91,6 +113,26 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
+  // Currency variant - text input style
+  currencyTextInput: {
+    flex: 1,
+    ...textStyles.textMd,
+    color: colors.gray[700],
+    padding: 0,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    margin: 0,
+  },
+
+  // Textarea variant
+  textareaInput: {
+    flex: 1,
+    ...textStyles.textMd,
+    color: colors.gray[700],
+    padding: 0,
+    textAlignVertical: 'top',
+  },
+
   prefixText: {
     fontFamily: typography.fontFamily.bold,
     ...typography.text.md,
@@ -98,5 +140,38 @@ export const styles = StyleSheet.create({
 
   placeholderText: {
     color: colors.gray[500],
+  },
+
+  // Quantity input styles
+  quantityContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
+  },
+
+  quantityButton: {
+    width: 20,
+    height: 20,
+  },
+
+  quantityText: {
+    ...textStyles.textMd,
+    color: colors.gray[700],
+    padding: 0,
+    textAlign: 'center',
+  },
+
+  disabled: {
+    opacity: 0.6,
+  },
+
+  disabledButton: {
+    opacity: 0.3,
+  },
+
+  disabledText: {
+    color: colors.gray[400],
   },
 })

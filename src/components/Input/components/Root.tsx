@@ -31,11 +31,14 @@ export function Root({
     ...(width && { width }),
   }
 
+  // Extract style from props to merge it properly
+  const { style, ...otherProps } = props
+
   return (
     <InputContext.Provider
       value={{ variant, state, setState, handleFocus, handleBlur }}
     >
-      <View style={containerStyle} {...props}>
+      <View style={[containerStyle, style]} {...otherProps}>
         {children}
       </View>
     </InputContext.Provider>

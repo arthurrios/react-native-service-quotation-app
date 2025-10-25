@@ -1,12 +1,15 @@
+import { useState } from 'react'
 import { View } from 'react-native'
 import { Button } from '@/components'
 import { HomeHeader } from '@/components/HomeHeader'
 import { Input } from '@/components/Input'
-import { MoneyLabel } from '@/components/MoneyLabel'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
 
 export function Home({ navigation }: StackRoutesProps<'home'>) {
+  const [description, setDescription] = useState('')
+  const [price, setPrice] = useState<string | number>('')
+  const [quantity, setQuantity] = useState<string | number>('')
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <HomeHeader />
@@ -25,15 +28,35 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
             <Button.Icon name="filter" />
           </Button.Root>
         </View>
+        <View style={{ marginTop: 24 }}>
+          <Input
+            variant="textarea"
+            placeholder="Describe your service..."
+            rows={4}
+            value={description}
+            onChangeValue={(value) => setDescription(value as string)}
+          />
 
-        <MoneyLabel value={3847.5} size="lg" />
+          <View style={{ marginTop: 24, flexDirection: 'row', gap: 8 }}>
+            <Input
+              variant="currency"
+              placeholder="0,00"
+              value={price}
+              onChangeValue={setPrice}
+              style={{ flex: 1 }}
+            />
 
-        <MoneyLabel value={3847.5} />
-
-        <MoneyLabel value={-200} color="danger" />
-        <MoneyLabel value={200} color="success" />
-
-        <MoneyLabel value={4050.0} size="sm" strikethrough />
+            <Input
+              variant="quantity"
+              value={quantity}
+              onChangeValue={setQuantity}
+              min={1}
+              max={99}
+              step={1}
+              disabled={false}
+            />
+          </View>
+        </View>
       </View>
     </View>
   )

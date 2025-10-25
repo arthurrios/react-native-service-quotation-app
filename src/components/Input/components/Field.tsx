@@ -1,7 +1,15 @@
-import { NativeSyntheticEvent, TargetedEvent, TextInput } from 'react-native'
+import {
+  NativeSyntheticEvent,
+  TargetedEvent,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { useInputContext } from '../hooks/InputContext'
 import { styles } from '../styles'
 import { InputFieldProps } from '../types'
+import { Icon } from './Icon'
 
 export function Field({
   variant,
@@ -9,6 +17,13 @@ export function Field({
   style,
   onFocus,
   onBlur,
+  value,
+  onChangeValue,
+  rows,
+  min,
+  max,
+  step,
+  disabled,
   ...props
 }: InputFieldProps) {
   const context = useInputContext()
@@ -17,8 +32,14 @@ export function Field({
   const textInputStyle = [
     finalVariant === 'percentage'
       ? styles.percentageTextInput
-      : styles.textInput,
+      : finalVariant === 'textarea'
+        ? styles.textareaInput
+        : styles.textInput,
     finalVariant === 'percentage' && { textAlign: 'center' as const },
+    finalVariant === 'textarea' && {
+      textAlignVertical: 'top' as const,
+      height: (rows || 3) * 20 + 16,
+    },
     style,
   ]
 
@@ -32,11 +53,63 @@ export function Field({
     onBlur?.(e)
   }
 
+  // Quantity handlers
+  const handleIncrement = () => {
+    if (disabled) return
+    const currentValue = typeof value === 'number' ? value : 1
+    const nextValue = Math.min(currentValue + (step || 1), max || 999)
+    onChangeValue?.(nextValue)
+  }
+
+  const handleDecrement = () => {
+    if (disabled) return
+    const currentValue = typeof value === 'number' ? value : 1
+    const nextValue = Math.max(currentValue - (step || 1), min || 0)
+    onChangeValue?.(nextValue)
+  }
+
+  if (finalVariant === 'quantity') {
+    return (
+      <View style={[styles.quantityContainer, disabled && styles.disabled]}>
+        <TouchableOpacity
+          style={[styles.quantityButton, disabled && styles.disabledButton]}
+          onPress={handleDecrement}
+          disabled={
+            disabled || (typeof value === 'number' ? value <= (min || 1) : true)
+          }
+        >
+          <Icon name="minus" size={20} />
+        </TouchableOpacity>
+        <Text style={[styles.quantityText, disabled && styles.disabledText]}>
+          {typeof value === 'number' ? value : 1}
+        </Text>
+        <TouchableOpacity
+          style={[styles.quantityButton, disabled && styles.disabledButton]}
+          onPress={handleIncrement}
+          disabled={
+            disabled ||
+            (typeof value === 'number' ? value >= (max || 999) : true)
+          }
+        >
+          <Icon name="plus" size={20} />
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   return (
     <TextInput
       style={textInputStyle}
       placeholderTextColor={styles.placeholderText.color}
-      keyboardType={finalVariant === 'percentage' ? 'numeric' : 'default'}
+      keyboardType={
+        finalVariant === 'percentage' || finalVariant === 'currency'
+          ? 'numeric'
+          : 'default'
+      }
+      multiline={finalVariant === 'textarea'}
+      numberOfLines={finalVariant === 'textarea' ? rows || 3 : undefined}
+      value={typeof value === 'number' ? value.toString() : value || ''}
+      onChangeText={onChangeValue}
       onFocus={handleFocus}
       onBlur={handleBlur}
       {...props}
