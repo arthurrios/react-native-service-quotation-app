@@ -1,15 +1,19 @@
 import { useState } from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, View } from 'react-native'
 import { Button } from '@/components'
+import { FilterModal } from '@/components/FilterModal'
 import { HomeHeader } from '@/components/HomeHeader'
 import { Input } from '@/components/Input'
 import { QuoteCard } from '@/components/QuoteCard'
+import { StatusType } from '@/components/Status/types'
 import { quotesData } from '@/data'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
 
 export function Home({ navigation }: StackRoutesProps<'home'>) {
   const [search, setSearch] = useState('')
+  const [filterModalVisible, setFilterModalVisible] = useState(false)
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <HomeHeader />
@@ -29,7 +33,10 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
               onChangeValue={(value) => setSearch(value as string)}
             />
           </View>
-          <Button.Root variant="secondary">
+          <Button.Root
+            variant="secondary"
+            onPress={() => setFilterModalVisible(true)}
+          >
             <Button.Icon name="filter" />
           </Button.Root>
         </View>
@@ -40,6 +47,12 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
           contentContainerStyle={{ gap: 8 }}
         />
       </View>
+      <FilterModal
+        visible={filterModalVisible}
+        onClose={() => setFilterModalVisible(false)}
+        statuses={[StatusType.SENT, StatusType.DRAFT]}
+        orderBy="mostRecent"
+      />
     </View>
   )
 }

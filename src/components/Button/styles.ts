@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
 
   secondaryText: {
     ...textStyles.titleMd,
-    color: colors.gray[700],
+    color: colors.purple.base,
   },
 
   dangerText: {
