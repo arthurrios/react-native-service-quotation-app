@@ -5,7 +5,7 @@ import { MoneyLabelStyleProps, MoneySize } from './types'
 const sizeToTextStyleMap: Record<MoneySize, TextStyle> = {
   sm: textStyles.textXs,
   md: textStyles.textSm,
-  lg: textStyles.titleLg,
+  lg: textStyles.titleMd,
 }
 
 export const colorMap: Record<string, string> = {

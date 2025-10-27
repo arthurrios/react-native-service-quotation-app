@@ -2,11 +2,11 @@ import { Text, View } from 'react-native'
 import { getStatusConfig, styles } from './styles'
 import { StatusProps } from './types'
 
-export function Status({ status }: StatusProps) {
+export function Status({ status, ...props }: StatusProps) {
   const config = getStatusConfig(status)
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.style]} {...props}>
       <View
         style={[
           styles.indicatorContainer,

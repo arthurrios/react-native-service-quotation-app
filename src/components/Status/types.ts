@@ -1,3 +1,5 @@
+import { ViewProps } from 'react-native'
+
 export enum StatusType {
   SENT = 'sent',
   DRAFT = 'draft',
@@ -5,6 +7,6 @@ export enum StatusType {
   DECLINED = 'declined',
 }
 
-export interface StatusProps {
+export interface StatusProps extends ViewProps {
   status: StatusType
 }
