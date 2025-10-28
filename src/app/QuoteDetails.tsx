@@ -1,15 +1,19 @@
-import { Button, Text, View } from 'react-native'
+import { View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { QuoteHeader } from '@/components/QuoteHeader'
+import { useQuotes } from '@/hooks/useQuotes'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 
 export function QuoteDetails({
   navigation,
   route,
 }: StackRoutesProps<'quoteDetails'>) {
+  const { top } = useSafeAreaInsets()
+  const { quotes } = useQuotes()
+  const quote = quotes.find((quote) => quote.id === route.params.quoteId)
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Quote Details</Text>
-      <Text>Quote ID: {route.params.quoteId}</Text>
-      <Button title="Go Back" onPress={navigation.goBack} />
+    <View style={{ paddingTop: top }}>
+      <QuoteHeader quote={quote} onBack={navigation.goBack} />
     </View>
   )
 }

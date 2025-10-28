@@ -1,15 +1,21 @@
 import { Text, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Button } from '../Button'
 import { styles } from './styles'
 
-export function HomeHeader() {
+interface HomeHeaderProps {
+  onNewQuote: () => void
+}
+
+export function HomeHeader({ onNewQuote }: HomeHeaderProps) {
+  const { top } = useSafeAreaInsets()
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: top }]}>
       <View>
         <Text style={styles.title}>Orçamentos</Text>
         <Text style={styles.description}>Você tem 1 item em rascunho</Text>
       </View>
-      <Button.Root>
+      <Button.Root onPress={onNewQuote}>
         <Button.Icon name="plus" />
         <Button.Title>Novo</Button.Title>
       </Button.Root>

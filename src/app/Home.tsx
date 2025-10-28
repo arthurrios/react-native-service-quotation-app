@@ -5,9 +5,10 @@ import { HomeHeader } from '@/components/HomeHeader'
 import { Input } from '@/components/Input'
 import { QuoteCard } from '@/components/QuoteCard'
 import { useQuotes } from '@/hooks/useQuotes'
+import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
 
-export function Home() {
+export function Home({ navigation }: StackRoutesProps<'home'>) {
   const {
     quotes,
     filters,
@@ -23,9 +24,17 @@ export function Home() {
     resetModalFilters,
   } = useQuotes()
 
+  function handleNewQuote() {
+    navigation.navigate('quoteForm')
+  }
+
+  function handleQuotePress(quoteId: string) {
+    navigation.navigate('quoteDetails', { quoteId })
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
-      <HomeHeader />
+      <HomeHeader onNewQuote={handleNewQuote} />
       <View style={{ paddingVertical: 24, paddingHorizontal: 20, gap: 24 }}>
         <View
           style={{
@@ -49,7 +58,9 @@ export function Home() {
         <FlatList
           data={quotes}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <QuoteCard quote={item} />}
+          renderItem={({ item }) => (
+            <QuoteCard quote={item} onPress={() => handleQuotePress(item.id)} />
+          )}
           contentContainerStyle={{ gap: 8 }}
         />
       </View>

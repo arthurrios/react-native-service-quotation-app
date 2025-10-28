@@ -7,15 +7,17 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: 16,
     borderBottomWidth: 1,
     borderBottomColor: colors.gray[200],
   },
-  title: {
-    ...textStyles.titleLg,
-    color: colors.purple.base,
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
   },
-  description: {
-    ...textStyles.textSm,
-    color: colors.gray[500],
+  headerTitle: {
+    ...textStyles.titleSm,
+    color: colors.gray[700],
   },
 })
