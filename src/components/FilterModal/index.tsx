@@ -1,12 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, ModalProps, Text, TouchableOpacity, View } from 'react-native'
 import { colors } from '@/styles'
 import { Button } from '../Button'
 import { Checkbox } from '../Checkbox'
-import { useCheckbox } from '../Checkbox/useCheckbox'
 import { Icon } from '../Icon'
 import { Radio } from '../Radio'
-import { useRadio } from '../Radio/useRadio'
 import { Status } from '../Status'
 import { StatusType } from '../Status/types'
 import { styles } from './styles'
@@ -18,6 +16,10 @@ export interface FilterModalProps extends ModalProps {
   onApply: () => void
   statuses: StatusType[]
   orderBy: 'mostRecent' | 'oldest' | 'lowestPrice' | 'highestPrice'
+  onStatusChange: (statuses: StatusType[]) => void
+  onOrderByChange: (
+    orderBy: 'mostRecent' | 'oldest' | 'lowestPrice' | 'highestPrice',
+  ) => void
 }
 
 const statusOptions = [
@@ -36,6 +38,7 @@ const orderByOptions: Array<{
   { value: 'highestPrice', label: 'Maior valor' },
   { value: 'lowestPrice', label: 'Menor valor' },
 ]
+
 export function FilterModal({
   visible,
   onClose,
@@ -43,23 +46,36 @@ export function FilterModal({
   onApply,
   statuses,
   orderBy,
+  onStatusChange,
+  onOrderByChange,
   ...props
 }: FilterModalProps) {
-  // Status management with checkboxes (multiple selection)
-  const {
-    checkedValues: selectedStatuses,
-    isChecked: isStatusSelected,
-    toggle: toggleStatus,
-  } = useCheckbox<StatusType>(statuses)
+  // Local state for temporary changes
+  const [tempStatuses, setTempStatuses] = useState<StatusType[]>(statuses)
+  const [tempOrderBy, setTempOrderBy] = useState(orderBy)
 
-  // Order by management with radio (single selection)
-  const {
-    selectedValue: selectedOrderBy,
-    isSelected: isOrderBySelected,
-    select: selectOrderBy,
-  } = useRadio<'mostRecent' | 'oldest' | 'highestPrice' | 'lowestPrice'>(
-    orderBy,
-  )
+  // Update local state when props change
+  useEffect(() => {
+    setTempStatuses(statuses)
+    setTempOrderBy(orderBy)
+  }, [statuses, orderBy])
+
+  // Handle status toggle
+  const handleStatusToggle = (status: StatusType) => {
+    const newStatuses = tempStatuses.includes(status)
+      ? tempStatuses.filter((s) => s !== status)
+      : [...tempStatuses, status]
+    setTempStatuses(newStatuses)
+    onStatusChange(newStatuses)
+  }
+
+  // Handle order by change
+  const handleOrderByChange = (
+    newOrderBy: 'mostRecent' | 'oldest' | 'lowestPrice' | 'highestPrice',
+  ) => {
+    setTempOrderBy(newOrderBy)
+    onOrderByChange(newOrderBy)
+  }
 
   return (
     <Modal
@@ -90,8 +106,8 @@ export function FilterModal({
                   <Checkbox
                     key={option.toString()}
                     label={<Status status={option} />}
-                    checked={isStatusSelected(option)}
-                    onToggle={() => toggleStatus(option)}
+                    checked={tempStatuses.includes(option)}
+                    onToggle={() => handleStatusToggle(option)}
                   />
                 ))}
               </View>
@@ -103,8 +119,8 @@ export function FilterModal({
                   <Radio
                     key={option.value}
                     label={option.label}
-                    selected={isOrderBySelected(option.value)}
-                    onSelect={() => selectOrderBy(option.value)}
+                    selected={tempOrderBy === option.value}
+                    onSelect={() => handleOrderByChange(option.value)}
                   />
                 ))}
               </View>
