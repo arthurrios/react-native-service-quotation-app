@@ -110,6 +110,7 @@ export const styles = StyleSheet.create({
   percentageTextInput: {
     flex: 1,
     ...textStyles.textMd,
+    lineHeight: textStyles.textMd.fontSize * 1.2,
     color: colors.gray[700],
     padding: 0,
     textAlign: 'center',

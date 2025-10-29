@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { StatusType } from '@/components/Status/types'
 import { storageService } from '@/data/storage'
-import { QuoteDoc, QuoteStatus } from '@/types/quote'
+import { QuoteDoc, QuoteItem, QuoteStatus } from '@/types/quote'
 
 const STATUS_MAPPING: Record<StatusType, QuoteStatus> = {
   [StatusType.DRAFT]: 'Rascunho',
@@ -62,26 +63,24 @@ const initialFilters: UseQuotesFilters = {
 }
 
 // Calculate total value for a quote
-export const calculateQuoteTotal = (quote: QuoteDoc): number => {
-  const itemsTotal = quote.items.reduce(
-    (sum, item) => sum + item.qty * item.price,
-    0,
-  )
-
-  const discount = quote.discountPct
-    ? itemsTotal * (quote.discountPct / 100)
-    : 0
-
-  return itemsTotal - discount
+export const calculateQuoteTotal = ({
+  items,
+}: {
+  items: QuoteItem[]
+}): number => {
+  const itemsTotal = items.reduce((sum, item) => sum + item.qty * item.price, 0)
+  return itemsTotal
 }
 
-export const calculateQuoteDiscount = (quote: QuoteDoc): number => {
-  const itemsTotal = quote.items.reduce(
-    (sum, item) => sum + item.qty * item.price,
-    0,
-  )
-
-  return itemsTotal * (quote?.discountPct || 0 / 100)
+export const calculateQuoteDiscount = ({
+  items,
+  discountPct,
+}: {
+  items: QuoteItem[]
+  discountPct: number
+}): number => {
+  const itemsTotal = items.reduce((sum, item) => sum + item.qty * item.price, 0)
+  return itemsTotal * (discountPct / 100)
 }
 
 export function useQuotes(): UseQuotesReturn {
@@ -93,9 +92,11 @@ export function useQuotes(): UseQuotesReturn {
   const [isLoading, setIsLoading] = useState(true)
 
   // Load data from storage on mount
-  useEffect(() => {
-    loadData()
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      loadData()
+    }, []),
+  )
 
   // Save filters to storage whenever they change
   useEffect(() => {

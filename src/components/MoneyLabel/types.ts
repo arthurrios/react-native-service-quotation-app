@@ -1,6 +1,6 @@
 import { TextProps } from 'react-native'
 
-export type MoneySize = 'sm' | 'md' | 'lg'
+export type MoneySize = 'sm' | 'md' | 'lg' | 'xl'
 
 export type MoneyColorVariant = 'default' | 'success' | 'danger'
 

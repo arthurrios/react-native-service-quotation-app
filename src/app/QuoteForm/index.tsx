@@ -1,14 +1,17 @@
-import { ScrollView, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import { Button, Radio, Status } from '@/components'
 import { Card } from '@/components/Card'
 import { statusOptions } from '@/components/FilterModal'
 import { Input } from '@/components/Input'
+import { MoneyLabel } from '@/components/MoneyLabel'
 import { QuoteHeader } from '@/components/QuoteHeader'
 import { QuoteItemInfo } from '@/components/QuoteItemInfo'
 import { QuoteItemModal } from '@/components/QuoteItemModal'
 import { useQuoteForm } from '@/hooks/useQuoteForm'
+import { calculateQuoteTotal } from '@/hooks/useQuotes'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
+import { styles } from './styles'
 
 export function QuoteForm({ navigation }: StackRoutesProps<'quoteForm'>) {
   const {
@@ -26,7 +29,18 @@ export function QuoteForm({ navigation }: StackRoutesProps<'quoteForm'>) {
     deleteItem,
     setSelectedItem,
     selectedItem,
-  } = useQuoteForm()
+    setDiscountPct,
+    discountPct,
+    total,
+    discount,
+    totalWithDiscount,
+    itemsQuantity,
+    hasTitleError,
+    hasClientError,
+    setHasTouchedTitle,
+    setHasTouchedClient,
+    handleSave,
+  } = useQuoteForm({ navigation })
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <QuoteHeader onBack={navigation.goBack} />
@@ -36,11 +50,19 @@ export function QuoteForm({ navigation }: StackRoutesProps<'quoteForm'>) {
           title="Informações gerais"
           style={{ padding: 16, gap: 12 }}
         >
-          <Input placeholder="Título" value={title} onChangeText={setTitle} />
+          <Input
+            placeholder="Título"
+            value={title}
+            onChangeValue={(value) => setTitle(value as string)}
+            onBlur={() => setHasTouchedTitle(true)}
+            variant={hasTitleError ? 'danger' : 'empty'}
+          />
           <Input
             placeholder="Cliente"
             value={client}
-            onChangeText={setClient}
+            onChangeValue={(value) => setClient(value as string)}
+            onBlur={() => setHasTouchedClient(true)}
+            variant={hasClientError ? 'danger' : 'empty'}
           />
         </Card>
         <Card
@@ -98,7 +120,58 @@ export function QuoteForm({ navigation }: StackRoutesProps<'quoteForm'>) {
             <Button.Title>Adicionar serviço</Button.Title>
           </Button.Root>
         </Card>
+        <Card title="Investimento" icon="credit-card">
+          <View style={{ padding: 16, gap: 20 }}>
+            <View style={styles.rowContainer}>
+              <Text style={styles.subtotalText}>Subtotal</Text>
+              <View style={{ ...styles.rowContainer, gap: 12 }}>
+                <Text>{itemsQuantity} itens</Text>
+                <MoneyLabel value={calculateQuoteTotal({ items })} />
+              </View>
+            </View>
+            <View style={styles.rowContainer}>
+              <View style={{ ...styles.rowContainer, gap: 8 }}>
+                <Text style={styles.discountText}>Desconto</Text>
+                <Input
+                  variant="percentage"
+                  value={discountPct}
+                  onChangeValue={(value) => setDiscountPct(Number(value))}
+                />
+              </View>
+              {discountPct > 0 && (
+                <MoneyLabel color="danger" isNegative value={discount} />
+              )}
+            </View>
+          </View>
+          <View
+            style={[
+              styles.rowContainer,
+              {
+                backgroundColor: colors.gray[100],
+                borderTopWidth: 1,
+                borderTopColor: colors.gray[200],
+                paddingVertical: 16,
+                paddingHorizontal: 20,
+              },
+            ]}
+          >
+            <Text style={styles.totalText}>Valor total</Text>
+            <View style={styles.totalContainer}>
+              {discountPct > 0 && <MoneyLabel strikethrough value={total} />}
+              <MoneyLabel size="xl" value={totalWithDiscount} />
+            </View>
+          </View>
+        </Card>
       </ScrollView>
+      <View style={styles.footer}>
+        <Button.Root variant="secondary" onPress={navigation.goBack}>
+          <Button.Title>Cancelar</Button.Title>
+        </Button.Root>
+        <Button.Root variant="primary" onPress={handleSave}>
+          <Button.Icon name="check" />
+          <Button.Title>Salvar</Button.Title>
+        </Button.Root>
+      </View>
       <QuoteItemModal
         visible={isQuoteItemModalOpen}
         onClose={() => {

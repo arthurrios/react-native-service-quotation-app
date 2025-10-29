@@ -6,6 +6,7 @@ const sizeToTextStyleMap: Record<MoneySize, TextStyle> = {
   sm: textStyles.textXs,
   md: textStyles.textSm,
   lg: textStyles.titleMd,
+  xl: textStyles.titleLg,
 }
 
 export const colorMap: Record<string, string> = {
@@ -37,6 +38,10 @@ export function getMoneyStyles({
     },
     value: {
       ...baseStyle,
+    },
+    strikethrough: {
+      ...baseStyle,
+      color: colors.gray[600],
     },
   })
 }

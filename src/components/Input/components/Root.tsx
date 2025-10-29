@@ -27,6 +27,7 @@ export function Root({
   const containerStyle = {
     ...styles.container,
     ...styles[variant],
+    ...(variant === 'percentage' && { height: 32, maxWidth: 80 }),
     ...(state === 'focus' && styles.focus),
     ...(width && { width }),
   }

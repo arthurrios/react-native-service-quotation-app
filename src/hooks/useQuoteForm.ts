@@ -1,31 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { Alert } from 'react-native'
 import { useRadio } from '@/components/Radio/useRadio'
 import { StatusType } from '@/components/Status/types'
+import { mapStatusTypeToQuoteStatus } from '@/data/seed'
+import { StackRoutesProps } from '@/routes/StackRoutes'
 import { QuoteItem } from '@/types/quote'
+import {
+  calculateQuoteDiscount,
+  calculateQuoteTotal,
+  useQuotes,
+} from './useQuotes'
 
 // Simple ID generator for React Native compatibility
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2)
 }
 
-const defaultItems: QuoteItem[] = [
-  {
-    id: '1',
-    name: 'Design de interfaces',
-    description: 'Design de interfaces para o seu produto',
-    qty: 1,
-    price: 3847.5,
-  },
-  {
-    id: '2',
-    name: 'Implantação e suporte',
-    description: 'Publicação do seu produto no Google Play Store e App Store',
-    qty: 2,
-    price: 3847.5,
-  },
-]
-
-export function useQuoteForm() {
+export function useQuoteForm({
+  navigation,
+}: Pick<StackRoutesProps<'quoteForm'>, 'navigation'>) {
   const [isQuoteItemModalOpen, setIsQuoteItemModalOpen] = useState(false)
   const [title, setTitle] = useState('')
   const [client, setClient] = useState('')
@@ -35,8 +28,93 @@ export function useQuoteForm() {
     selectedValue: status,
     isSelected: isStatusSelected,
   } = useRadio<StatusType>(StatusType.DRAFT)
-  const [items, setItems] = useState<QuoteItem[]>(defaultItems)
+  const [items, setItems] = useState<QuoteItem[]>([])
   const [selectedItem, setSelectedItem] = useState<QuoteItem | null>(null)
+  const [hasTitleError, setHasTitleError] = useState(false)
+  const [hasClientError, setHasClientError] = useState(false)
+  const [hasTouchedTitle, setHasTouchedTitle] = useState(false)
+  const [hasTouchedClient, setHasTouchedClient] = useState(false)
+
+  useEffect(() => {
+    if (hasTouchedTitle) {
+      setHasTitleError(!title.trim())
+    }
+  }, [title, hasTouchedTitle])
+
+  useEffect(() => {
+    if (hasTouchedClient) {
+      setHasClientError(!client.trim())
+    }
+  }, [client, hasTouchedClient])
+
+  const itemsQuantity = useMemo(
+    () => items.reduce((sum, item) => sum + item.qty, 0),
+    [items],
+  )
+
+  const total = useMemo(() => calculateQuoteTotal({ items }), [items])
+  const discount = useMemo(
+    () => calculateQuoteDiscount({ items, discountPct }),
+    [items, discountPct],
+  )
+  const totalWithDiscount = useMemo(() => total - discount, [total, discount])
+  const { addQuote, updateQuote } = useQuotes()
+
+  function validateForm() {
+    // Mark all fields as touched when validating on submit
+    setHasTouchedTitle(true)
+    setHasTouchedClient(true)
+
+    let hasError = false
+
+    if (!title.trim()) {
+      setHasTitleError(true)
+      hasError = true
+      return 'O título é obrigatório'
+    }
+    if (!client.trim()) {
+      setHasClientError(true)
+      hasError = true
+      return 'O cliente é obrigatório'
+    }
+    if (!items.length) {
+      return 'É necessário adicionar pelo menos um item'
+    }
+
+    if (hasError) {
+      return 'Preencha todos os campos obrigatórios'
+    }
+
+    setHasTitleError(false)
+    setHasClientError(false)
+    return null
+  }
+
+  async function handleSave() {
+    const error = validateForm()
+    if (error) {
+      Alert.alert('Erro', error, [{ text: 'OK', style: 'cancel' }])
+      return
+    }
+    try {
+      await addQuote({
+        title,
+        client,
+        items,
+        status: mapStatusTypeToQuoteStatus(status || StatusType.DRAFT),
+        discountPct,
+      })
+      Alert.alert('Sucesso', 'Cotação salva com sucesso', [
+        { text: 'OK', style: 'cancel' },
+      ])
+      navigation.goBack()
+    } catch (error) {
+      console.error('Error adding quote:', error)
+      Alert.alert('Erro', 'Erro ao salvar cotação', [
+        { text: 'OK', style: 'cancel' },
+      ])
+    }
+  }
 
   function addItem(quoteItem: Omit<QuoteItem, 'id'>) {
     setItems((prev) => [...prev, { id: generateId(), ...quoteItem }])
@@ -71,5 +149,14 @@ export function useQuoteForm() {
     deleteItem,
     isQuoteItemModalOpen,
     setIsQuoteItemModalOpen,
+    total,
+    discount,
+    totalWithDiscount,
+    itemsQuantity,
+    hasTitleError,
+    hasClientError,
+    setHasTouchedTitle,
+    setHasTouchedClient,
+    handleSave,
   }
 }
