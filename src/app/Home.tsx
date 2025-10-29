@@ -61,7 +61,8 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
           renderItem={({ item }) => (
             <QuoteCard quote={item} onPress={() => handleQuotePress(item.id)} />
           )}
-          contentContainerStyle={{ gap: 8 }}
+          contentContainerStyle={{ gap: 8, paddingBottom: 250 }}
+          showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => {
             return (
               <View
