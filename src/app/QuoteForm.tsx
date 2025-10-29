@@ -1,20 +1,34 @@
 import { ScrollView, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Button, Radio, Status } from '@/components'
 import { Card } from '@/components/Card'
 import { statusOptions } from '@/components/FilterModal'
 import { Input } from '@/components/Input'
 import { QuoteHeader } from '@/components/QuoteHeader'
+import { QuoteItemInfo } from '@/components/QuoteItemInfo'
+import { QuoteItemModal } from '@/components/QuoteItemModal'
 import { useQuoteForm } from '@/hooks/useQuoteForm'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
 
 export function QuoteForm({ navigation }: StackRoutesProps<'quoteForm'>) {
-  const { top } = useSafeAreaInsets()
-  const { selectStatus, isStatusSelected, title, setTitle, client, setClient } =
-    useQuoteForm()
+  const {
+    selectStatus,
+    isStatusSelected,
+    title,
+    setTitle,
+    client,
+    setClient,
+    items,
+    isQuoteItemModalOpen,
+    setIsQuoteItemModalOpen,
+    addItem,
+    updateItem,
+    deleteItem,
+    setSelectedItem,
+    selectedItem,
+  } = useQuoteForm()
   return (
-    <View style={{ paddingTop: top, flex: 1, backgroundColor: colors.white }}>
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
       <QuoteHeader onBack={navigation.goBack} />
       <ScrollView contentContainerStyle={{ padding: 20, gap: 20 }}>
         <Card
@@ -59,14 +73,43 @@ export function QuoteForm({ navigation }: StackRoutesProps<'quoteForm'>) {
         <Card
           icon="note-with-text"
           title="Serviços inclusos"
-          style={{ padding: 16, gap: 12 }}
+          style={{ padding: 16, gap: 20 }}
         >
-          <Button.Root variant="secondary">
+          {items.length > 0 && (
+            <View style={{ gap: 20 }}>
+              {items.map((item) => (
+                <QuoteItemInfo
+                  key={item.id}
+                  quoteItem={item}
+                  shouldEllipseText
+                  onEditItem={(item) => {
+                    setSelectedItem(item)
+                    setIsQuoteItemModalOpen(true)
+                  }}
+                />
+              ))}
+            </View>
+          )}
+          <Button.Root
+            variant="secondary"
+            onPress={() => setIsQuoteItemModalOpen(true)}
+          >
             <Button.Icon name="plus" />
             <Button.Title>Adicionar serviço</Button.Title>
           </Button.Root>
         </Card>
       </ScrollView>
+      <QuoteItemModal
+        visible={isQuoteItemModalOpen}
+        onClose={() => {
+          setIsQuoteItemModalOpen(false)
+          setSelectedItem(null)
+        }}
+        onAddItem={addItem}
+        onUpdateItem={(item) => updateItem(item.id, item)}
+        onDeleteItem={deleteItem}
+        quoteItem={selectedItem}
+      />
     </View>
   )
 }

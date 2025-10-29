@@ -1,4 +1,5 @@
 import { Text, TouchableOpacity, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { QuoteDoc } from '@/data'
 import { statusMapping } from '@/data/seed'
 import { colors } from '@/styles'
@@ -12,8 +13,9 @@ interface QuoteHeaderProps {
 }
 
 export function QuoteHeader({ quote, onBack }: QuoteHeaderProps) {
+  const { top } = useSafeAreaInsets()
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: top }]}>
       <View style={styles.headerLeft}>
         <TouchableOpacity onPress={onBack}>
           <Icon name="chevron-left" size={24} color={colors.gray[600]} />
