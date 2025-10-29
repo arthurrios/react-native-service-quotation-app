@@ -1,4 +1,4 @@
-import { FlatList, View } from 'react-native'
+import { FlatList, Text, View } from 'react-native'
 import { Button } from '@/components'
 import { FilterModal } from '@/components/FilterModal'
 import { HomeHeader } from '@/components/HomeHeader'
@@ -6,7 +6,7 @@ import { Input } from '@/components/Input'
 import { QuoteCard } from '@/components/QuoteCard'
 import { useQuotes } from '@/hooks/useQuotes'
 import { StackRoutesProps } from '@/routes/StackRoutes'
-import { colors } from '@/styles'
+import { colors, textStyles } from '@/styles'
 
 export function Home({ navigation }: StackRoutesProps<'home'>) {
   const {
@@ -62,6 +62,22 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
             <QuoteCard quote={item} onPress={() => handleQuotePress(item.id)} />
           )}
           contentContainerStyle={{ gap: 8 }}
+          ListEmptyComponent={() => {
+            return (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingTop: 100,
+                }}
+              >
+                <Text style={{ ...textStyles.textMd, color: colors.gray[500] }}>
+                  Nenhum orçamento encontrado
+                </Text>
+              </View>
+            )
+          }}
         />
       </View>
       <FilterModal

@@ -7,6 +7,11 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 import { Routes } from '@/routes'
 
+// Import storage utils for development
+if (__DEV__) {
+  import('@/utils/storageUtils')
+}
+
 SplashScreen.preventAutoHideAsync()
 
 export default function App() {
