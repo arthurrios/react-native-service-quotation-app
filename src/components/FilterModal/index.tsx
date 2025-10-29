@@ -22,7 +22,7 @@ export interface FilterModalProps extends ModalProps {
   ) => void
 }
 
-const statusOptions = [
+export const statusOptions = [
   StatusType.DRAFT,
   StatusType.SENT,
   StatusType.APPROVED,

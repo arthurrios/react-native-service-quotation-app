@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 16,
     borderBottomWidth: 1,
+    backgroundColor: colors.white,
     borderBottomColor: colors.gray[200],
   },
   headerLeft: {

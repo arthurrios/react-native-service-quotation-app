@@ -1,4 +1,4 @@
-export interface Item {
+export interface QuoteItem {
   id: string
   description: string
   qty: number
@@ -11,7 +11,7 @@ export interface QuoteDoc {
   id: string
   client: string
   title: string
-  items: Item[]
+  items: QuoteItem[]
   discountPct?: number
   status: QuoteStatus
   createdAt: Date
