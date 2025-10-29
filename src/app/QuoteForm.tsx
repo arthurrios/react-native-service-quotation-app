@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Radio, Status } from '@/components'
+import { Button, Radio, Status } from '@/components'
 import { Card } from '@/components/Card'
 import { statusOptions } from '@/components/FilterModal'
 import { Input } from '@/components/Input'
@@ -55,6 +55,16 @@ export function QuoteForm({ navigation }: StackRoutesProps<'quoteForm'>) {
               </View>
             ))}
           </View>
+        </Card>
+        <Card
+          icon="note-with-text"
+          title="Serviços inclusos"
+          style={{ padding: 16, gap: 12 }}
+        >
+          <Button.Root variant="secondary">
+            <Button.Icon name="plus" />
+            <Button.Title>Adicionar serviço</Button.Title>
+          </Button.Root>
         </Card>
       </ScrollView>
     </View>

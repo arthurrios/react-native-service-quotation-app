@@ -41,31 +41,41 @@ export const seedQuotes: QuoteDoc[] = [
     items: [
       {
         id: '1-1',
-        description: 'Desenvolvimento do aplicativo mobile (iOS e Android)',
+        name: 'App Mobile Cross-Platform',
+        description:
+          'Desenvolvimento completo do aplicativo mobile para iOS e Android usando React Native, incluindo todas as funcionalidades de e-commerce',
         qty: 1,
         price: 12000.0,
       },
       {
         id: '1-2',
-        description: 'Integração com gateway de pagamento',
+        name: 'Gateway de Pagamento',
+        description:
+          'Integração com múltiplos gateways de pagamento (Stripe, PayPal, PagSeguro) com sistema de checkout seguro',
         qty: 1,
         price: 3500.0,
       },
       {
         id: '1-3',
-        description: 'Sistema de gestão de estoque',
+        name: 'Sistema de Estoque',
+        description:
+          'Sistema completo de gestão de estoque com controle de entrada, saída, alertas de reposição e relatórios',
         qty: 1,
         price: 2800.0,
       },
       {
         id: '1-4',
-        description: 'Painel administrativo web',
+        name: 'Painel Administrativo',
+        description:
+          'Dashboard web completo para gestão de pedidos, clientes, produtos e relatórios de vendas',
         qty: 1,
         price: 4500.0,
       },
       {
         id: '1-5',
-        description: 'Testes e validação completa',
+        name: 'Testes e QA',
+        description:
+          'Testes automatizados, validação de funcionalidades, testes de performance e garantia de qualidade',
         qty: 1,
         price: 1500.0,
       },
@@ -82,25 +92,33 @@ export const seedQuotes: QuoteDoc[] = [
     items: [
       {
         id: '2-1',
-        description: 'Auditoria completa de marketing digital',
+        name: 'Auditoria de Marketing Digital',
+        description:
+          'Análise completa da presença digital, SEO, redes sociais, concorrência e oportunidades de melhoria',
         qty: 1,
         price: 1500.0,
       },
       {
         id: '2-2',
-        description: 'Estratégia de conteúdo para redes sociais',
+        name: 'Estratégia de Conteúdo',
+        description:
+          'Planejamento estratégico de conteúdo para Instagram, Facebook, LinkedIn e TikTok com calendário editorial',
         qty: 1,
         price: 1200.0,
       },
       {
         id: '2-3',
-        description: 'Configuração de campanhas Google Ads',
+        name: 'Campanhas Google Ads',
+        description:
+          'Configuração e otimização de campanhas de busca, display e shopping no Google Ads',
         qty: 1,
         price: 800.0,
       },
       {
         id: '2-4',
-        description: 'Relatórios mensais de performance',
+        name: 'Relatórios de Performance',
+        description:
+          'Relatórios mensais detalhados com métricas de ROI, engajamento e sugestões de otimização',
         qty: 3,
         price: 500.0,
       },
@@ -116,25 +134,33 @@ export const seedQuotes: QuoteDoc[] = [
     items: [
       {
         id: '3-1',
-        description: 'Auditoria técnica de SEO',
+        name: 'Auditoria Técnica SEO',
+        description:
+          'Análise completa da estrutura técnica do site, velocidade, mobile-friendliness e problemas de indexação',
         qty: 1,
         price: 1200.0,
       },
       {
         id: '3-2',
-        description: 'Otimização de palavras-chave',
+        name: 'Pesquisa de Palavras-chave',
+        description:
+          'Pesquisa e análise de palavras-chave relevantes, análise da concorrência e estratégia de posicionamento',
         qty: 1,
         price: 800.0,
       },
       {
         id: '3-3',
-        description: 'Criação de conteúdo otimizado',
+        name: 'Conteúdo SEO',
+        description:
+          'Criação de conteúdo otimizado para SEO com foco em palavras-chave e experiência do usuário',
         qty: 1,
         price: 1000.0,
       },
       {
         id: '3-4',
-        description: 'Link building e autoridade de domínio',
+        name: 'Link Building',
+        description:
+          'Estratégia de construção de links de qualidade para aumentar a autoridade e ranking do domínio',
         qty: 1,
         price: 500.0,
       },
@@ -150,19 +176,25 @@ export const seedQuotes: QuoteDoc[] = [
     items: [
       {
         id: '4-1',
-        description: 'Criação de 20 posts para Instagram',
+        name: 'Posts Instagram',
+        description:
+          'Criação de 20 posts criativos para Instagram com design, copy e estratégia de engajamento',
         qty: 1,
         price: 1000.0,
       },
       {
         id: '4-2',
-        description: 'Produção de 5 vídeos para YouTube',
+        name: 'Vídeos YouTube',
+        description:
+          'Produção de 5 vídeos para YouTube incluindo roteiro, gravação, edição e otimização',
         qty: 1,
         price: 800.0,
       },
       {
         id: '4-3',
-        description: 'Criação de 10 artigos para blog',
+        name: 'Artigos para Blog',
+        description:
+          'Criação de 10 artigos otimizados para blog com pesquisa, escrita e SEO',
         qty: 1,
         price: 700.0,
       },
@@ -178,19 +210,25 @@ export const seedQuotes: QuoteDoc[] = [
     items: [
       {
         id: '5-1',
-        description: 'Gestão completa do Instagram',
+        name: 'Gestão Instagram',
+        description:
+          'Gestão completa do Instagram incluindo posts, stories, reels, interação com seguidores e análise de métricas',
         qty: 1,
         price: 800.0,
       },
       {
         id: '5-2',
-        description: 'Gestão completa do Facebook',
+        name: 'Gestão Facebook',
+        description:
+          'Gestão completa do Facebook incluindo posts, eventos, grupos, anúncios e monitoramento de comentários',
         qty: 1,
         price: 600.0,
       },
       {
         id: '5-3',
-        description: 'Criação de estratégia de engajamento',
+        name: 'Estratégia de Engajamento',
+        description:
+          'Desenvolvimento de estratégia personalizada para aumentar engajamento e fidelização da audiência',
         qty: 1,
         price: 400.0,
       },
@@ -206,25 +244,33 @@ export const seedQuotes: QuoteDoc[] = [
     items: [
       {
         id: '6-1',
-        description: 'Design de interface para aplicativo mobile',
+        name: 'UI/UX Mobile App',
+        description:
+          'Design completo de interface para aplicativo mobile incluindo wireframes, mockups e especificações técnicas',
         qty: 1,
         price: 2500.0,
       },
       {
         id: '6-2',
-        description: 'Criação de identidade visual',
+        name: 'Identidade Visual',
+        description:
+          'Criação de identidade visual completa incluindo logo, paleta de cores, tipografia e aplicações',
         qty: 1,
         price: 1500.0,
       },
       {
         id: '6-3',
-        description: 'Prototipação interativa',
+        name: 'Prototipação Interativa',
+        description:
+          'Criação de protótipos interativos clicáveis para validação de fluxos e experiência do usuário',
         qty: 1,
         price: 800.0,
       },
       {
         id: '6-4',
-        description: 'Guia de estilo e componentes',
+        name: 'Design System',
+        description:
+          'Criação de guia de estilo e biblioteca de componentes reutilizáveis para desenvolvimento',
         qty: 1,
         price: 400.0,
       },
