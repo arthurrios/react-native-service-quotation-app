@@ -45,9 +45,9 @@ function Input({
         <CurrencyInput
           value={typeof value === 'number' ? value : 0}
           onChangeValue={handleCurrencyChange}
-          prefix="R$ "
-          delimiter="."
-          separator=","
+          prefix="$ "
+          delimiter=","
+          separator="."
           precision={2}
           minValue={0}
           placeholder={placeholder}

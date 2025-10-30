@@ -32,10 +32,10 @@ const orderByOptions: Array<{
   value: 'mostRecent' | 'oldest' | 'lowestPrice' | 'highestPrice'
   label: string
 }> = [
-  { value: 'mostRecent', label: 'Mais recente' },
-  { value: 'oldest', label: 'Mais antigo' },
-  { value: 'highestPrice', label: 'Maior valor' },
-  { value: 'lowestPrice', label: 'Menor valor' },
+  { value: 'mostRecent', label: 'Most recent' },
+  { value: 'oldest', label: 'Oldest' },
+  { value: 'highestPrice', label: 'Highest price' },
+  { value: 'lowestPrice', label: 'Lowest price' },
 ]
 
 export function FilterModal({
@@ -80,16 +80,16 @@ export function FilterModal({
     <ModalComponent
       visible={visible}
       onClose={onClose}
-      title="Filtrar e ordenar"
+      title="Filter and sort"
       {...props}
       footer={
         <View style={styles.footer}>
           <Button.Root variant="secondary" onPress={onReset}>
-            <Button.Title>Resetar filtros</Button.Title>
+            <Button.Title>Reset filters</Button.Title>
           </Button.Root>
           <Button.Root variant="primary" onPress={onApply}>
             <Button.Icon name="check" />
-            <Button.Title>Aplicar</Button.Title>
+            <Button.Title>Apply</Button.Title>
           </Button.Root>
         </View>
       }
@@ -108,7 +108,7 @@ export function FilterModal({
         </View>
       </View>
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Ordenação</Text>
+        <Text style={styles.sectionTitle}>Sorting</Text>
         <View style={styles.sectionOptions}>
           {orderByOptions.map((option) => (
             <Radio

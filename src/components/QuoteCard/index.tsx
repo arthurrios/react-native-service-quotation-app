@@ -23,9 +23,13 @@ export function QuoteCard({ quote, ...props }: QuoteCardProps) {
     totalWithoutDiscount * (1 - (quote.discountPct ?? 0) / 100)
   return (
     <TouchableOpacity style={styles.container} {...props}>
-      <View style={{ gap: 8, flexShrink: 1 }}>
-        <Text style={styles.quoteTitle}>{quote.title}</Text>
-        <Text style={styles.quoteClient}>{quote.client}</Text>
+      <View style={{ gap: 8, flexShrink: 1, width: '70%' }}>
+        <Text style={styles.quoteTitle} numberOfLines={2}>
+          {quote.title}
+        </Text>
+        <Text style={styles.quoteClient} numberOfLines={1}>
+          {quote.client}
+        </Text>
       </View>
       <MoneyLabel value={totalWithDiscount} size="lg" />
       <Status status={statusMapping[quote.status]} style={styles.status} />

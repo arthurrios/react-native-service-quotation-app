@@ -1,34 +1,34 @@
-# Orçamento de Serviços (React Native)
+# Service Quotation (React Native)
 
-Este projeto é um desafio para estudantes da Rocketseat. O objetivo é construir um app mobile para criação e gestão de orçamentos de serviços, aplicando boas práticas de UI, componentes reutilizáveis, tipagem com TypeScript e armazenamento local.
+This project is a challenge for Rocketseat students. The goal is to build a mobile app for creating and managing service quotes, applying UI best practices, reusable components, TypeScript typing, and local storage.
 
-## 🚀 Tecnologias
+## 🚀 Tech Stack
 
 - React Native 0.81 (Hermes)
 - TypeScript
 - React Navigation
-- Async Storage (persistência local)
-- react-native-svg (ícones SVG)
+- Async Storage (local persistence)
+- react-native-svg (SVG icons)
 - PNPM
 
-## 🧭 Como rodar
+## 🧭 Getting Started
 
 ```bash
 pnpm install
 pnpm start
-# Em outro terminal
+# In another terminal
 pnpm android
-# ou
+# or
 pnpm ios
 ```
 
-## 📚 Documentação
+## 📚 Documentation
 
-A documentação dos componentes e padrões do projeto está organizada na pasta `docs/`.
+All component and pattern documentation lives in the `docs/` folder.
 
-- Guia principal: [`docs/README.md`](./docs/README.md)
+- Main index: [`docs/README.md`](./docs/README.md)
 
-### Português (PT)
+### Portuguese (PT)
 - [Botão - Padrão Legado](./docs/pt/button-legacy-pattern.md)
 - [Botão - Padrão de Composição](./docs/pt/button-composition-pattern.md)
 - [Checkbox](./docs/pt/checkbox-guide.md)
@@ -46,17 +46,17 @@ A documentação dos componentes e padrões do projeto está organizada na pasta
 - [MoneyLabel](./docs/en/money-label-guide.md)
 - [Icons (SVG)](./docs/en/icon-guide.md)
 
-## 📦 Estrutura (resumo)
+## 📦 Structure (summary)
 
 ```
 src/
-├── app/                # Telas e fluxos
-├── components/         # Componentes reutilizáveis
-├── assets/             # Ícones e imagens
-├── data/               # Seed, storage e dados mock
-└── styles/             # Tokens, tipografia, cores
+├── app/                # Screens and flows
+├── components/         # Reusable components
+├── assets/             # Icons and images
+├── data/               # Seed, storage and mock data
+└── styles/             # Tokens, typography, colors
 ```
 
-## 📝 Licença
+## 📝 License
 
-Uso educacional no contexto do desafio Rocketseat.
+Educational use within the Rocketseat challenge context.

@@ -13,17 +13,17 @@ export function HomeHeader({ onNewQuote, draftQuotesCount }: HomeHeaderProps) {
   return (
     <View style={[styles.container, { paddingTop: top }]}>
       <View>
-        <Text style={styles.title}>Orçamentos</Text>
+        <Text style={styles.title}>Quotes</Text>
         {draftQuotesCount > 0 && (
           <Text style={styles.description}>
-            Você tem {draftQuotesCount} item{draftQuotesCount > 1 ? 's' : ''} em
-            rascunho
+            You have {draftQuotesCount} item{draftQuotesCount > 1 ? 's' : ''} in
+            draft
           </Text>
         )}
       </View>
       <Button.Root onPress={onNewQuote}>
         <Button.Icon name="plus" />
-        <Button.Title>Novo</Button.Title>
+        <Button.Title>New</Button.Title>
       </Button.Root>
     </View>
   )

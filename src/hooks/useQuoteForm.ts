@@ -96,19 +96,19 @@ export function useQuoteForm({
     if (!title.trim()) {
       setHasTitleError(true)
       hasError = true
-      return 'O título é obrigatório'
+      return 'Title is required'
     }
     if (!client.trim()) {
       setHasClientError(true)
       hasError = true
-      return 'O cliente é obrigatório'
+      return 'Client is required'
     }
     if (!items.length) {
-      return 'É necessário adicionar pelo menos um item'
+      return 'You must add at least one item'
     }
 
     if (hasError) {
-      return 'Preencha todos os campos obrigatórios'
+      return 'Fill in all required fields'
     }
 
     setHasTitleError(false)
@@ -119,7 +119,7 @@ export function useQuoteForm({
   async function handleSave() {
     const error = validateForm()
     if (error) {
-      Alert.alert('Erro', error, [{ text: 'OK', style: 'cancel' }])
+      Alert.alert('Error', error, [{ text: 'OK', style: 'cancel' }])
       return
     }
     const quoteData = {
@@ -137,13 +137,13 @@ export function useQuoteForm({
           ...quoteData,
         })
       }
-      Alert.alert('Sucesso', 'Cotação salva com sucesso', [
+      Alert.alert('Success', 'Quote saved successfully', [
         { text: 'OK', style: 'cancel' },
       ])
       navigation.goBack()
     } catch (error) {
       console.error('Error adding quote:', error)
-      Alert.alert('Erro', 'Erro ao salvar cotação', [
+      Alert.alert('Error', 'Failed to save quote', [
         { text: 'OK', style: 'cancel' },
       ])
     }

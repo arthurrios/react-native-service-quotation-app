@@ -5,10 +5,10 @@ import { QuoteDoc, QuoteStatus } from '@/types/quote'
  * Mapeia os valores de status do QuoteStatus para as chaves do StatusType
  */
 export const statusMapping: Record<QuoteStatus, StatusType> = {
-  Rascunho: StatusType.DRAFT,
-  Enviado: StatusType.SENT,
-  Aprovado: StatusType.APPROVED,
-  Recusado: StatusType.DECLINED,
+  Draft: StatusType.DRAFT,
+  Sent: StatusType.SENT,
+  Approved: StatusType.APPROVED,
+  Declined: StatusType.DECLINED,
 }
 
 /**
@@ -28,7 +28,7 @@ export const mapStatusTypeToQuoteStatus = (
     ([, value]) => value === statusType,
   )
   if (!reverseMapping) {
-    throw new Error(`StatusType ${statusType} não encontrado no mapeamento`)
+    throw new Error(`StatusType ${statusType} not found in mapping`)
   }
   return reverseMapping[0] as QuoteStatus
 }
@@ -36,8 +36,8 @@ export const mapStatusTypeToQuoteStatus = (
 export const seedQuotes: QuoteDoc[] = [
   {
     id: '1',
-    client: 'Soluções Tecnológicas Beta',
-    title: 'Desenvolvimento de aplicativo de loja online',
+    client: 'Tech Solutions Beta',
+    title: 'Online store app development',
     items: [
       {
         id: '1-1',
@@ -51,7 +51,7 @@ export const seedQuotes: QuoteDoc[] = [
         id: '1-2',
         name: 'Gateway de Pagamento',
         description:
-          'Integração com múltiplos gateways de pagamento (Stripe, PayPal, PagSeguro) com sistema de checkout seguro',
+          'Integration with multiple payment gateways (Stripe, PayPal, PagSeguro) with secure checkout system',
         qty: 1,
         price: 3500.0,
       },
@@ -59,7 +59,7 @@ export const seedQuotes: QuoteDoc[] = [
         id: '1-3',
         name: 'Sistema de Estoque',
         description:
-          'Sistema completo de gestão de estoque com controle de entrada, saída, alertas de reposição e relatórios',
+          'Complete inventory management system with entry/exit control, restock alerts and reports',
         qty: 1,
         price: 2800.0,
       },
@@ -67,7 +67,7 @@ export const seedQuotes: QuoteDoc[] = [
         id: '1-4',
         name: 'Painel Administrativo',
         description:
-          'Dashboard web completo para gestão de pedidos, clientes, produtos e relatórios de vendas',
+          'Complete web dashboard for order management, customers, products and sales reports',
         qty: 1,
         price: 4500.0,
       },
@@ -75,84 +75,84 @@ export const seedQuotes: QuoteDoc[] = [
         id: '1-5',
         name: 'Testes e QA',
         description:
-          'Testes automatizados, validação de funcionalidades, testes de performance e garantia de qualidade',
+          'Automated testing, feature validation, performance testing and quality assurance',
         qty: 1,
         price: 1500.0,
       },
     ],
     discountPct: 5,
-    status: 'Aprovado',
+    status: 'Approved',
     createdAt: new Date('2024-01-15'),
     updatedAt: new Date('2024-01-20'),
   },
   {
     id: '2',
     client: 'Marketing Wizards',
-    title: 'Consultoria em marketing digital',
+    title: 'Digital marketing consulting',
     items: [
       {
         id: '2-1',
-        name: 'Auditoria de Marketing Digital',
+        name: 'Digital Marketing Audit',
         description:
-          'Análise completa da presença digital, SEO, redes sociais, concorrência e oportunidades de melhoria',
+          'Complete analysis of digital presence, SEO, social media, competition and improvement opportunities',
         qty: 1,
         price: 1500.0,
       },
       {
         id: '2-2',
-        name: 'Estratégia de Conteúdo',
+        name: 'Content Strategy',
         description:
-          'Planejamento estratégico de conteúdo para Instagram, Facebook, LinkedIn e TikTok com calendário editorial',
+          'Strategic content planning for Instagram, Facebook, LinkedIn and TikTok with editorial calendar',
         qty: 1,
         price: 1200.0,
       },
       {
         id: '2-3',
-        name: 'Campanhas Google Ads',
+        name: 'Google Ads Campaigns',
         description:
-          'Configuração e otimização de campanhas de busca, display e shopping no Google Ads',
+          'Setup and optimization of search, display and shopping campaigns on Google Ads',
         qty: 1,
         price: 800.0,
       },
       {
         id: '2-4',
-        name: 'Relatórios de Performance',
+        name: 'Performance Reports',
         description:
-          'Relatórios mensais detalhados com métricas de ROI, engajamento e sugestões de otimização',
+          'Detailed monthly reports with ROI metrics, engagement and optimization suggestions',
         qty: 3,
         price: 500.0,
       },
     ],
-    status: 'Rascunho',
+    status: 'Draft',
     createdAt: new Date('2024-01-22'),
     updatedAt: new Date('2024-01-25'),
   },
   {
     id: '3',
     client: 'SEO Masters',
-    title: 'Serviços de SEO',
+    title: 'SEO Services',
     items: [
       {
         id: '3-1',
-        name: 'Auditoria Técnica SEO',
+        name: 'Technical SEO Audit',
         description:
-          'Análise completa da estrutura técnica do site, velocidade, mobile-friendliness e problemas de indexação',
+          'Complete analysis of site technical structure, speed, mobile-friendliness and indexing issues',
         qty: 1,
         price: 1200.0,
       },
       {
         id: '3-2',
-        name: 'Pesquisa de Palavras-chave',
+        name: 'Keyword Research',
         description:
-          'Pesquisa e análise de palavras-chave relevantes, análise da concorrência e estratégia de posicionamento',
+          'Research and analysis of relevant keywords, competition analysis and positioning strategy',
         qty: 1,
         price: 800.0,
       },
       {
         id: '3-3',
-        name: 'Conteúdo SEO',
+        name: 'SEO Content',
         description:
-          'Criação de conteúdo otimizado para SEO com foco em palavras-chave e experiência do usuário',
+          'Creation of SEO-optimized content focusing on keywords and user experience',
         qty: 1,
         price: 1000.0,
       },
@@ -160,80 +160,80 @@ export const seedQuotes: QuoteDoc[] = [
         id: '3-4',
         name: 'Link Building',
         description:
-          'Estratégia de construção de links de qualidade para aumentar a autoridade e ranking do domínio',
+          'Quality link building strategy to increase domain authority and ranking',
         qty: 1,
         price: 500.0,
       },
     ],
-    status: 'Enviado',
+    status: 'Sent',
     createdAt: new Date('2024-01-28'),
     updatedAt: new Date('2024-01-30'),
   },
   {
     id: '4',
     client: 'Content Creators',
-    title: 'Criação de conteúdo',
+    title: 'Content creation',
     items: [
       {
         id: '4-1',
-        name: 'Posts Instagram',
+        name: 'Instagram Posts',
         description:
-          'Criação de 20 posts criativos para Instagram com design, copy e estratégia de engajamento',
+          'Creation of 20 creative Instagram posts with design, copy and engagement strategy',
         qty: 1,
         price: 1000.0,
       },
       {
         id: '4-2',
-        name: 'Vídeos YouTube',
+        name: 'YouTube Videos',
         description:
-          'Produção de 5 vídeos para YouTube incluindo roteiro, gravação, edição e otimização',
+          'Production of 5 YouTube videos including script, recording, editing and optimization',
         qty: 1,
         price: 800.0,
       },
       {
         id: '4-3',
-        name: 'Artigos para Blog',
+        name: 'Blog Articles',
         description:
-          'Criação de 10 artigos otimizados para blog com pesquisa, escrita e SEO',
+          'Creation of 10 blog-optimized articles with research, writing and SEO',
         qty: 1,
         price: 700.0,
       },
     ],
-    status: 'Rascunho',
+    status: 'Draft',
     createdAt: new Date('2024-01-10'),
     updatedAt: new Date('2024-01-18'),
   },
   {
     id: '5',
     client: 'Social Experts',
-    title: 'Gestão de redes sociais',
+    title: 'Social media management',
     items: [
       {
         id: '5-1',
-        name: 'Gestão Instagram',
+        name: 'Instagram Management',
         description:
-          'Gestão completa do Instagram incluindo posts, stories, reels, interação com seguidores e análise de métricas',
+          'Complete Instagram management including posts, stories, reels, follower interaction and metrics analysis',
         qty: 1,
         price: 800.0,
       },
       {
         id: '5-2',
-        name: 'Gestão Facebook',
+        name: 'Facebook Management',
         description:
-          'Gestão completa do Facebook incluindo posts, eventos, grupos, anúncios e monitoramento de comentários',
+          'Complete Facebook management including posts, events, groups, ads and comment monitoring',
         qty: 1,
         price: 600.0,
       },
       {
         id: '5-3',
-        name: 'Estratégia de Engajamento',
+        name: 'Engagement Strategy',
         description:
-          'Desenvolvimento de estratégia personalizada para aumentar engajamento e fidelização da audiência',
+          'Development of personalized strategy to increase engagement and audience loyalty',
         qty: 1,
         price: 400.0,
       },
     ],
-    status: 'Recusado',
+    status: 'Declined',
     createdAt: new Date('2024-02-01'),
     updatedAt: new Date('2024-02-05'),
   },
@@ -244,25 +244,25 @@ export const seedQuotes: QuoteDoc[] = [
     items: [
       {
         id: '6-1',
-        name: 'UI/UX Mobile App',
+        name: 'Mobile UI/UX App',
         description:
-          'Design completo de interface para aplicativo mobile incluindo wireframes, mockups e especificações técnicas',
+          'Complete mobile app interface design including wireframes, mockups and technical specifications',
         qty: 1,
         price: 2500.0,
       },
       {
         id: '6-2',
-        name: 'Identidade Visual',
+        name: 'Visual Identity',
         description:
-          'Criação de identidade visual completa incluindo logo, paleta de cores, tipografia e aplicações',
+          'Complete visual identity creation including logo, color palette, typography and applications',
         qty: 1,
         price: 1500.0,
       },
       {
         id: '6-3',
-        name: 'Prototipação Interativa',
+        name: 'Interactive Prototyping',
         description:
-          'Criação de protótipos interativos clicáveis para validação de fluxos e experiência do usuário',
+          'Creation of clickable interactive prototypes for flow validation and user experience',
         qty: 1,
         price: 800.0,
       },
@@ -270,12 +270,12 @@ export const seedQuotes: QuoteDoc[] = [
         id: '6-4',
         name: 'Design System',
         description:
-          'Criação de guia de estilo e biblioteca de componentes reutilizáveis para desenvolvimento',
+          'Creation of style guide and reusable component library for development',
         qty: 1,
         price: 400.0,
       },
     ],
-    status: 'Aprovado',
+    status: 'Approved',
     createdAt: new Date('2024-02-08'),
     updatedAt: new Date('2024-02-10'),
   },

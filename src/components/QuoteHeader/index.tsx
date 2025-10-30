@@ -21,7 +21,7 @@ export function QuoteHeader({ quote, onBack }: QuoteHeaderProps) {
           <Icon name="chevron-left" size={24} color={colors.gray[600]} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
-          Orçamento {quote ? `#${quote?.id}` : null}
+          Quote {quote ? `#${quote?.id}` : null}
         </Text>
       </View>
       {quote && <Status status={statusMapping[quote?.status]} />}

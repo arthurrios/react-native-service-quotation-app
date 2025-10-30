@@ -5,10 +5,10 @@ import { storageService } from '@/data/storage'
 import { QuoteDoc, QuoteItem, QuoteStatus } from '@/types/quote'
 
 const STATUS_MAPPING: Record<StatusType, QuoteStatus> = {
-  [StatusType.DRAFT]: 'Rascunho',
-  [StatusType.SENT]: 'Enviado',
-  [StatusType.APPROVED]: 'Aprovado',
-  [StatusType.DECLINED]: 'Recusado',
+  [StatusType.DRAFT]: 'Draft',
+  [StatusType.SENT]: 'Sent',
+  [StatusType.APPROVED]: 'Approved',
+  [StatusType.DECLINED]: 'Declined',
 }
 
 export type OrderBy = 'mostRecent' | 'oldest' | 'lowestPrice' | 'highestPrice'

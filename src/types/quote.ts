@@ -6,7 +6,7 @@ export interface QuoteItem {
   price: number
 }
 
-export type QuoteStatus = 'Rascunho' | 'Enviado' | 'Aprovado' | 'Recusado'
+export type QuoteStatus = 'Draft' | 'Sent' | 'Approved' | 'Declined'
 
 export interface QuoteDoc {
   id: string

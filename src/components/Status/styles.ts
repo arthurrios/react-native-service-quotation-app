@@ -9,35 +9,35 @@ export const getStatusConfig = (status: StatusType) => {
         background: colors.info.light,
         indicator: colors.info.base,
         text: colors.info.dark,
-        label: 'Enviado',
+        label: 'Sent',
       }
     case StatusType.DRAFT:
       return {
         background: colors.gray[300],
         indicator: colors.gray[400],
         text: colors.gray[500],
-        label: 'Rascunho',
+        label: 'Draft',
       }
     case StatusType.APPROVED:
       return {
         background: colors.success.light,
         indicator: colors.success.base,
         text: colors.success.dark,
-        label: 'Aprovado',
+        label: 'Approved',
       }
     case StatusType.DECLINED:
       return {
         background: colors.danger.light,
         indicator: colors.danger.base,
         text: colors.danger.dark,
-        label: 'Recusado',
+        label: 'Declined',
       }
     default:
       return {
         background: colors.gray[300],
         indicator: colors.gray[400],
         text: colors.gray[500],
-        label: 'Desconhecido',
+        label: 'Unknown',
       }
   }
 }

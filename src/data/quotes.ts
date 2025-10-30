@@ -1,40 +1,40 @@
 import { QuoteDoc, QuoteStatus } from '@/types/quote'
 import { seedQuotes } from './seed'
 
-// Simula um banco de dados local em memória
+// Simulates a local in-memory database
 let quotes: QuoteDoc[] = [...seedQuotes]
 
 export const quotesData = {
-  // Buscar todos os orçamentos
+  // Get all quotes
   getAll: (): QuoteDoc[] => {
     return [...quotes]
   },
 
-  // Buscar orçamento por ID
+  // Get quote by ID
   getById: (id: string): QuoteDoc | undefined => {
     return quotes.find((quote) => quote.id === id)
   },
 
-  // Buscar orçamentos por status
+  // Get quotes by status
   getByStatus: (status: QuoteStatus): QuoteDoc[] => {
     return quotes.filter((quote) => quote.status === status)
   },
 
-  // Buscar orçamentos por cliente
+  // Get quotes by client
   getByClient: (clientName: string): QuoteDoc[] => {
     return quotes.filter((quote) =>
       quote.client.toLowerCase().includes(clientName.toLowerCase()),
     )
   },
 
-  // Buscar orçamentos por título
+  // Get quotes by title
   getByTitle: (title: string): QuoteDoc[] => {
     return quotes.filter((quote) =>
       quote.title.toLowerCase().includes(title.toLowerCase()),
     )
   },
 
-  // Busca geral (cliente ou título)
+  // General search (client or title)
   search: (query: string): QuoteDoc[] => {
     if (!query.trim()) return quotes
 
@@ -45,7 +45,7 @@ export const quotesData = {
     )
   },
 
-  // Criar novo orçamento
+  // Create new quote
   create: (
     quote: Omit<QuoteDoc, 'id' | 'createdAt' | 'updatedAt'>,
   ): QuoteDoc => {
@@ -60,7 +60,7 @@ export const quotesData = {
     return newQuote
   },
 
-  // Atualizar orçamento
+  // Update quote
   update: (
     id: string,
     updates: Partial<Omit<QuoteDoc, 'id' | 'createdAt'>>,
@@ -78,7 +78,7 @@ export const quotesData = {
     return quotes[index]
   },
 
-  // Deletar orçamento
+  // Delete quote
   delete: (id: string): boolean => {
     const index = quotes.findIndex((quote) => quote.id === id)
 
@@ -88,12 +88,12 @@ export const quotesData = {
     return true
   },
 
-  // Resetar dados para o estado inicial
+  // Reset data to initial state
   reset: (): void => {
     quotes = [...seedQuotes]
   },
 
-  // Estatísticas gerais
+  // General statistics
   getStats: () => {
     const total = quotes.length
     const byStatus = quotes.reduce(

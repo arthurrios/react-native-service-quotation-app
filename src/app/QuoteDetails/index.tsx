@@ -28,30 +28,26 @@ export function QuoteDetails({
   })
 
   function handleDeleteQuote() {
-    Alert.alert(
-      'Excluir cotação',
-      'Tem certeza que deseja excluir esta cotação?',
-      [
-        {
-          text: 'Cancelar',
-          style: 'cancel',
+    Alert.alert('Delete quote', 'Are you sure you want to delete this quote?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await deleteQuote(route.params.quoteId)
+            navigation.goBack()
+            Alert.alert('Quote deleted successfully')
+          } catch (error) {
+            console.error('Error deleting quote:', error)
+            Alert.alert('Error', 'Failed to delete quote')
+          }
         },
-        {
-          text: 'Excluir',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await deleteQuote(route.params.quoteId)
-              navigation.goBack()
-              Alert.alert('Cotação excluída com sucesso')
-            } catch (error) {
-              console.error('Error deleting quote:', error)
-              Alert.alert('Erro', 'Erro ao excluir cotação')
-            }
-          },
-        },
-      ],
-    )
+      },
+    ])
   }
 
   async function handleDuplicateQuote() {
@@ -62,12 +58,12 @@ export function QuoteDetails({
         ...rest,
       })
 
-      Alert.alert('Cotação duplicada com sucesso')
+      Alert.alert('Quote duplicated successfully')
 
       navigation.goBack()
     } catch (error) {
       console.error('Error copying quote:', error)
-      Alert.alert('Erro', 'Erro ao duplicar cotação')
+      Alert.alert('Error', 'Failed to duplicate quote')
     }
   }
 
@@ -77,7 +73,7 @@ export function QuoteDetails({
 
   const handleShare = () => {
     Share.share({
-      message: `Veja esta cotação: ${quote?.title}`,
+      message: `Check out this quote: ${quote?.title}`,
       url: `https://www.google.com`,
     })
   }
@@ -102,18 +98,18 @@ export function QuoteDetails({
           </View>
           <View style={styles.quoteInfoContainerContent}>
             <View style={styles.infoContainer}>
-              <Text style={styles.cardLabel}>Cliente</Text>
+              <Text style={styles.cardLabel}>Client</Text>
               <Text style={styles.cardValue}>{quote?.client}</Text>
             </View>
             <View style={styles.infoHorizontalContainer}>
               <View style={styles.infoContainer}>
-                <Text style={styles.cardLabel}>Data de criação</Text>
+                <Text style={styles.cardLabel}>Created at</Text>
                 <Text style={styles.cardValue}>
                   {quote?.createdAt.toLocaleDateString()}
                 </Text>
               </View>
               <View style={styles.infoContainer}>
-                <Text style={styles.cardLabel}>Data de atualização</Text>
+                <Text style={styles.cardLabel}>Updated at</Text>
                 <Text style={styles.cardValue}>
                   {quote?.updatedAt.toLocaleDateString()}
                 </Text>
@@ -123,7 +119,7 @@ export function QuoteDetails({
         </View>
         <Card
           icon="note-with-text"
-          title="Serviços inclusos"
+          title="Included services"
           style={{ paddingVertical: 16, paddingHorizontal: 20, gap: 20 }}
         >
           {quote?.items.map((item) => (
@@ -179,7 +175,7 @@ export function QuoteDetails({
               </>
             )}
             <View style={styles.infoHorizontalContainer}>
-              <Text style={styles.totalValueLabel}>Investimento total</Text>
+              <Text style={styles.totalValueLabel}>Total investment</Text>
               <MoneyLabel
                 value={totalValue - discountValue}
                 size="xl"
@@ -205,7 +201,7 @@ export function QuoteDetails({
         </View>
         <Button.Root variant="primary" onPress={handleShare}>
           <Button.Icon name="direction-up-right" />
-          <Button.Title>Compartilhar</Button.Title>
+          <Button.Title>Share</Button.Title>
         </Button.Root>
       </View>
     </View>

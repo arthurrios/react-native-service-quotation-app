@@ -66,7 +66,7 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
           <View style={{ flex: 1 }}>
             <Input
               icon="search"
-              placeholder="Título ou cliente"
+              placeholder="Title or client"
               value={filters.search}
               onChangeValue={(value) => setSearch(value as string)}
             />
@@ -97,7 +97,7 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
                 }}
               >
                 <Text style={{ ...textStyles.textMd, color: colors.gray[500] }}>
-                  Nenhum orçamento encontrado
+                  No quotes found
                 </Text>
               </View>
             )

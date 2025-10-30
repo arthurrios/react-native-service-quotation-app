@@ -30,7 +30,7 @@ export function MoneyLabel({
   return (
     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
       {isNegative && <Text style={minus}>- </Text>}
-      {showPrefix && <Text style={[prefix, prefixStyle]}>R$ </Text>}
+      {showPrefix && <Text style={[prefix, prefixStyle]}>$ </Text>}
       <Text style={[valueStyle, props.style]}>{formattedValue}</Text>
     </View>
   )

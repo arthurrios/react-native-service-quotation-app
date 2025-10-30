@@ -82,18 +82,18 @@ export function QuoteForm({
       >
         <Card
           icon="shop"
-          title="Informações gerais"
+          title="General information"
           style={{ padding: 16, gap: 12 }}
         >
           <Input
-            placeholder="Título"
+            placeholder="Title"
             value={title}
             onChangeValue={(value) => setTitle(value as string)}
             onBlur={() => setHasTouchedTitle(true)}
             variant={hasTitleError ? 'danger' : 'empty'}
           />
           <Input
-            placeholder="Cliente"
+            placeholder="Client"
             value={client}
             onChangeValue={(value) => setClient(value as string)}
             onBlur={() => setHasTouchedClient(true)}
@@ -129,7 +129,7 @@ export function QuoteForm({
         </Card>
         <Card
           icon="note-with-text"
-          title="Serviços inclusos"
+          title="Included services"
           style={{ padding: 16, gap: 20 }}
         >
           {items.length > 0 && (
@@ -152,21 +152,24 @@ export function QuoteForm({
             onPress={() => setIsQuoteItemModalOpen(true)}
           >
             <Button.Icon name="plus" />
-            <Button.Title>Adicionar serviço</Button.Title>
+            <Button.Title>Add service</Button.Title>
           </Button.Root>
         </Card>
-        <Card title="Investimento" icon="credit-card">
+        <Card title="Investment" icon="credit-card">
           <View style={{ padding: 16, gap: 20 }}>
             <View style={styles.rowContainer}>
               <Text style={styles.subtotalText}>Subtotal</Text>
               <View style={{ ...styles.rowContainer, gap: 12 }}>
-                <Text>{itemsQuantity} itens</Text>
+                <Text>
+                  {itemsQuantity}{' '}
+                  {itemsQuantity > 1 || itemsQuantity === 0 ? 'items' : 'item'}
+                </Text>
                 <MoneyLabel value={calculateQuoteTotal({ items })} />
               </View>
             </View>
             <View style={styles.rowContainer}>
               <View style={{ ...styles.rowContainer, gap: 8 }}>
-                <Text style={styles.discountText}>Desconto</Text>
+                <Text style={styles.discountText}>Discount</Text>
                 <Input
                   variant="percentage"
                   value={discountPct}
@@ -190,7 +193,7 @@ export function QuoteForm({
               },
             ]}
           >
-            <Text style={styles.totalText}>Valor total</Text>
+            <Text style={styles.totalText}>Total</Text>
             <View style={styles.totalContainer}>
               {discountPct > 0 && <MoneyLabel strikethrough value={total} />}
               <MoneyLabel size="xl" value={totalWithDiscount} />
@@ -200,11 +203,11 @@ export function QuoteForm({
       </ScrollView>
       <View style={styles.footer}>
         <Button.Root variant="secondary" onPress={navigation.goBack}>
-          <Button.Title>Cancelar</Button.Title>
+          <Button.Title>Cancel</Button.Title>
         </Button.Root>
         <Button.Root variant="primary" onPress={handleSave}>
           <Button.Icon name="check" />
-          <Button.Title>Salvar</Button.Title>
+          <Button.Title>Save</Button.Title>
         </Button.Root>
       </View>
       <QuoteItemModal

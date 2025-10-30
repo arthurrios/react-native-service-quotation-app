@@ -74,7 +74,7 @@ export function QuoteItemModal({
 
   return (
     <ModalComponent
-      title="Serviço"
+      title="Service"
       visible={visible}
       onClose={onClose}
       footer={
@@ -90,21 +90,21 @@ export function QuoteItemModal({
             disabled={!name.trim()}
           >
             <Button.Icon name="check" />
-            <Button.Title>Salvar</Button.Title>
+            <Button.Title>Save</Button.Title>
           </Button.Root>
         </View>
       }
     >
       <View style={styles.content}>
         <Input
-          placeholder="Nome"
+          placeholder="Name"
           value={name}
           onChangeValue={(value) => setName(value as string)}
         />
         <Input
           variant="textarea"
           value={description}
-          placeholder="Descrição"
+          placeholder="Description"
           onChangeValue={(value) => setDescription(value as string)}
         />
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
