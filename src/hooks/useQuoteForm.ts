@@ -122,22 +122,19 @@ export function useQuoteForm({
       Alert.alert('Erro', error, [{ text: 'OK', style: 'cancel' }])
       return
     }
+    const quoteData = {
+      title,
+      client,
+      items,
+      status: mapStatusTypeToQuoteStatus(status || StatusType.DRAFT),
+      discountPct,
+    }
     try {
       if (quote) {
-        await updateQuote(quote.id, {
-          title,
-          client,
-          items,
-          status: mapStatusTypeToQuoteStatus(status || StatusType.DRAFT),
-          discountPct,
-        })
+        await updateQuote(quote.id, quoteData)
       } else {
         await addQuote({
-          title,
-          client,
-          items,
-          status: mapStatusTypeToQuoteStatus(status || StatusType.DRAFT),
-          discountPct,
+          ...quoteData,
         })
       }
       Alert.alert('Sucesso', 'Cotação salva com sucesso', [
