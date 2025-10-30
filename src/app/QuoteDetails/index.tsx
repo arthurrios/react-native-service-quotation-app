@@ -159,9 +159,13 @@ export function QuoteDetails({
                     />
                   </View>
                   <View style={styles.infoHorizontalContainer}>
-                    <View>
+                    <View style={styles.discountContainer}>
                       <Text style={styles.valueLabel}>Desconto</Text>
-                      <View></View>
+                      <View style={styles.discountValueContainer}>
+                        <Text style={styles.discountValueText}>
+                          {quote?.discountPct}% off
+                        </Text>
+                      </View>
                     </View>
                     <MoneyLabel
                       value={discountValue}

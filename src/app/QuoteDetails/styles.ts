@@ -82,4 +82,19 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  discountContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  discountValueContainer: {
+    backgroundColor: colors.success.light,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  discountValueText: {
+    ...textStyles.titleXs,
+    color: colors.success.dark,
+  },
 })
