@@ -16,6 +16,9 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.gray[200],
   },
+  titleContainer: {
+    flex: 1,
+  },
   iconContainer: {
     width: 36,
     height: 36,

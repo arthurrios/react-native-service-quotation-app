@@ -65,7 +65,10 @@ export function QuoteForm({
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <QuoteHeader onBack={navigation.goBack} quote={quote ?? undefined} />
-      <ScrollView contentContainerStyle={{ padding: 20, gap: 20 }}>
+      <ScrollView
+        contentContainerStyle={{ padding: 20, gap: 20 }}
+        showsVerticalScrollIndicator={false}
+      >
         <Card
           icon="shop"
           title="Informações gerais"

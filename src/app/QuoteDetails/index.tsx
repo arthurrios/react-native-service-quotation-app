@@ -85,15 +85,20 @@ export function QuoteDetails({
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <QuoteHeader quote={quote} onBack={navigation.goBack} />
-      <ScrollView contentContainerStyle={{ padding: 20, gap: 20 }}>
+      <ScrollView
+        contentContainerStyle={{ padding: 20, gap: 20 }}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.quoteInfoContainer}>
           <View style={styles.quoteInfoContainerHeader}>
             <View style={styles.iconContainer}>
               <Icon name="shop" size={20} color={colors.purple.base} />
             </View>
-            <Text style={styles.quoteInfoContainerTitle} numberOfLines={2}>
-              {quote?.title}
-            </Text>
+            <View style={styles.titleContainer}>
+              <Text style={styles.quoteInfoContainerTitle} numberOfLines={2}>
+                {quote?.title}
+              </Text>
+            </View>
           </View>
           <View style={styles.quoteInfoContainerContent}>
             <View style={styles.infoContainer}>
