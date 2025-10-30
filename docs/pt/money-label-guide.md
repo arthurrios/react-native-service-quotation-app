@@ -1,6 +1,6 @@
 # Como Criar um Componente MoneyLabel
 
-Este documento explica como criar um componente MoneyLabel em React Native para exibir valores monetários com diferentes tamanhos, cores e opções de formatação.
+Este documento explica como criar um componente MoneyLabel em React Native para exibir valores monetários (USD) com diferentes tamanhos, cores e opções de formatação.
 
 ## 📋 Pré-requisitos
 
@@ -11,7 +11,7 @@ Este documento explica como criar um componente MoneyLabel em React Native para 
 ## 🎯 Objetivo
 
 Criar um componente MoneyLabel reutilizável que:
-- Exibe valores em Real Brasileiro (BRL)
+- Exibe valores em Dólar Americano (USD)
 - Suporta múltiplos tamanhos
 - Suporta diferentes variantes de cor
 - Trata valores negativos e descontos
@@ -36,19 +36,19 @@ utils/
 
 ## 🛠️ Implementação Passo a Passo
 
-### 1. Criar Utilitário para Formatação de Moeda
+### 1. Criar Utilitário para Formatação de Moeda (USD)
 
 Primeiro, crie uma função utilitária para formatar números como moeda:
 
 ```typescript
 // utils/formatCurrency.ts
 /**
- * Formata um número como moeda Real Brasileira (BRL) (apenas número, sem símbolo)
+ * Formata um número como moeda Dólar Americano (USD) (apenas número, sem símbolo)
  * @param value - O valor numérico para formatar
  * @returns String formatada sem símbolo (ex: "1.234,56")
  */
 export function formatCurrency(value: number): string {
-  return new Intl.NumberFormat('pt-BR', {
+  return new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value)
@@ -56,10 +56,10 @@ export function formatCurrency(value: number): string {
 ```
 
 **Explicação:**
-- Usa `Intl.NumberFormat` para formatação brasileira adequada
-- Retorna apenas o número (sem símbolo "R$")
+- Usa `Intl.NumberFormat` para formatação americana adequada
+- Retorna apenas o número (sem símbolo "$")
 - Sempre mostra 2 casas decimais
-- Usa vírgula como separador decimal e ponto como separador de milhares
+- Usa ponto como separador decimal e vírgula como separador de milhares
 
 ### 2. Definir Tipos
 
@@ -82,7 +82,7 @@ export interface MoneyLabelProps extends TextProps {
   isNegative?: boolean
   /** Se deve mostrar com riscado (para preços originais) */
   strikethrough?: boolean
-  /** Se deve mostrar o prefixo "R$" (padrão: true) */
+  /** Se deve mostrar o prefixo "$" (padrão: true) */
   showPrefix?: boolean
 }
 
@@ -190,7 +190,7 @@ export function MoneyLabel({
   return (
     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
       {isNegative && <Text style={minus}>- </Text>}
-      {showPrefix && <Text style={prefix}>R$ </Text>}
+      {showPrefix && <Text style={prefix}>$ </Text>}
       <Text style={[valueStyle, props.style]}>{formattedValue}</Text>
     </View>
   )
@@ -253,7 +253,7 @@ import { MoneyLabel } from '@/components/MoneyLabel'
 ### Sem Prefixo
 
 ```tsx
-// Esconder prefixo "R$"
+// Esconder prefixo "$"
 <MoneyLabel value={3847.50} showPrefix={false} />
 ```
 

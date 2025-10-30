@@ -1,6 +1,6 @@
 # How to Create a MoneyLabel Component
 
-This document explains how to create a MoneyLabel component in React Native for displaying monetary values with different sizes, colors, and formatting options.
+This document explains how to create a MoneyLabel component in React Native for displaying monetary values (USD) with different sizes, colors, and formatting options.
 
 ## 📋 Prerequisites
 
@@ -11,7 +11,7 @@ This document explains how to create a MoneyLabel component in React Native for 
 ## 🎯 Objective
 
 Create a reusable MoneyLabel component that:
-- Displays Brazilian Real (BRL) currency values
+- Displays US Dollar (USD) currency values
 - Supports multiple size variants
 - Supports different color variants
 - Handles negative values and discounts
@@ -36,19 +36,19 @@ utils/
 
 ## 🛠️ Step-by-Step Implementation
 
-### 1. Create Utility for Currency Formatting
+### 1. Create Utility for Currency Formatting (USD)
 
 First, create a utility function to format numbers as currency:
 
 ```typescript
 // utils/formatCurrency.ts
 /**
- * Formats a number as Brazilian Real (BRL) currency (number only, no symbol)
+ * Formats a number as US Dollar (USD) currency (number only, no symbol)
  * @param value - The numeric value to format
  * @returns Formatted currency string without symbol (e.g., "1.234,56")
  */
 export function formatCurrency(value: number): string {
-  return new Intl.NumberFormat('pt-BR', {
+  return new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value)
@@ -56,10 +56,10 @@ export function formatCurrency(value: number): string {
 ```
 
 **Explanation:**
-- Uses `Intl.NumberFormat` for proper Brazilian formatting
-- Returns only the number (no "R$" symbol)
+- Uses `Intl.NumberFormat` for proper US formatting
+- Returns only the number (no "$" symbol)
 - Always shows 2 decimal places
-- Uses comma as decimal separator and dot as thousands separator
+- Uses dot as decimal separator and comma as thousands separator
 
 ### 2. Define Types
 
@@ -82,7 +82,7 @@ export interface MoneyLabelProps extends TextProps {
   isNegative?: boolean
   /** Whether to show with strikethrough (for original prices) */
   strikethrough?: boolean
-  /** Whether to show the "R$" prefix (default: true) */
+  /** Whether to show the "$" prefix (default: true) */
   showPrefix?: boolean
 }
 
@@ -190,7 +190,7 @@ export function MoneyLabel({
   return (
     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
       {isNegative && <Text style={minus}>- </Text>}
-      {showPrefix && <Text style={prefix}>R$ </Text>}
+      {showPrefix && <Text style={prefix}>$ </Text>}
       <Text style={[valueStyle, props.style]}>{formattedValue}</Text>
     </View>
   )
@@ -253,7 +253,7 @@ import { MoneyLabel } from '@/components/MoneyLabel'
 ### Without Prefix
 
 ```tsx
-// Hide "R$" prefix
+// Hide "$" prefix
 <MoneyLabel value={3847.50} showPrefix={false} />
 ```
 
