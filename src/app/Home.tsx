@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { FlatList, Text, View } from 'react-native'
 import { Button } from '@/components'
 import { FilterModal } from '@/components/FilterModal'
@@ -32,6 +33,14 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
     navigation.navigate('quoteDetails', { quoteId })
   }
 
+  const isFilterApplied = useMemo(() => {
+    return (
+      filters.statuses.length > 0 ||
+      filters.search.length > 0 ||
+      filters.orderBy !== 'mostRecent'
+    )
+  }, [filters])
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <HomeHeader onNewQuote={handleNewQuote} />
@@ -51,7 +60,10 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
               onChangeValue={(value) => setSearch(value as string)}
             />
           </View>
-          <Button.Root variant="secondary" onPress={openModal}>
+          <Button.Root
+            variant={isFilterApplied ? 'primary' : 'secondary'}
+            onPress={openModal}
+          >
             <Button.Icon name="filter" />
           </Button.Root>
         </View>
