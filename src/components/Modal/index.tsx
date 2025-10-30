@@ -1,5 +1,13 @@
 import { ReactNode } from 'react'
-import { Modal, ModalProps, Text, TouchableOpacity, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Modal,
+  ModalProps,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { colors } from '@/styles'
 import { Icon } from '../Icon'
 import { styles } from './styles'
@@ -36,7 +44,10 @@ export function ModalComponent({
           activeOpacity={1}
           onPress={onClose}
         />
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+        >
           {(title || showCloseButton) && (
             <View style={styles.header}>
               {title && <Text style={styles.headerTitle}>{title}</Text>}
@@ -49,7 +60,7 @@ export function ModalComponent({
           )}
           <View style={styles.content}>{children}</View>
           {footer && <View style={styles.footer}>{footer}</View>}
-        </View>
+        </KeyboardAvoidingView>
       </View>
     </Modal>
   )

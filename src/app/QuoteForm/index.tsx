@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native'
 import { Button, Radio, Status } from '@/components'
 import { Card } from '@/components/Card'
 import { statusOptions } from '@/components/FilterModal'
@@ -63,11 +70,16 @@ export function QuoteForm({
   }, [route.params?.quoteId])
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.white }}>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: colors.white }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+    >
       <QuoteHeader onBack={navigation.goBack} quote={quote ?? undefined} />
       <ScrollView
         contentContainerStyle={{ padding: 20, gap: 20 }}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <Card
           icon="shop"
@@ -207,6 +219,6 @@ export function QuoteForm({
         onDeleteItem={deleteItem}
         quoteItem={selectedItem}
       />
-    </View>
+    </KeyboardAvoidingView>
   )
 }
