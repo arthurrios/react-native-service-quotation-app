@@ -12,14 +12,16 @@ docs/
 │   ├── checkbox-guide.md                # Checkbox guide (PT)
 │   ├── input-guide.md                   # Input guide (PT)
 │   ├── radio-guide.md                   # Radio guide (PT)
-│   └── money-label-guide.md             # MoneyLabel guide (PT)
+│   ├── money-label-guide.md             # MoneyLabel guide (PT)
+│   └── icon-guide.md                    # Icon (SVG) guide (PT)
 ├── en/                              # English documentation
 │   ├── button-legacy-pattern.md         # Button legacy pattern (EN)
 │   ├── button-composition-pattern.md    # Button composition pattern (EN)
 │   ├── checkbox-guide.md                # Checkbox guide (EN)
 │   ├── input-guide.md                   # Input guide (EN)
 │   ├── radio-guide.md                   # Radio guide (EN)
-│   └── money-label-guide.md             # MoneyLabel guide (EN)
+│   ├── money-label-guide.md             # MoneyLabel guide (EN)
+│   └── icon-guide.md                    # Icon (SVG) guide (EN)
 └── README.md                        # This file
 ```
 
@@ -48,6 +50,7 @@ This documentation covers multiple React Native components with different comple
 - [Input](./pt/input-guide.md)
 - [Radio](./pt/radio-guide.md)
 - [MoneyLabel](./pt/money-label-guide.md)
+ - [Ícones (SVG)](./pt/icon-guide.md)
 
 ### English (EN)
 - [Button - Legacy Pattern](./en/button-legacy-pattern.md)
@@ -56,6 +59,7 @@ This documentation covers multiple React Native components with different comple
 - [Input](./en/input-guide.md)
 - [Radio](./en/radio-guide.md)
 - [MoneyLabel](./en/money-label-guide.md)
+ - [Icons (SVG)](./en/icon-guide.md)
 
 ## 🚀 Quick Start
 
