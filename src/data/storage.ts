@@ -55,6 +55,16 @@ export const storageService = {
     }
   },
 
+  async getQuote(quoteId: string): Promise<QuoteDoc | null> {
+    try {
+      const quotes = await this.loadQuotes()
+      return quotes.find((q) => q.id === quoteId) ?? null
+    } catch (error) {
+      console.error('Error getting quote:', error)
+      return null
+    }
+  },
+
   async saveQuote(quote: QuoteDoc): Promise<void> {
     try {
       const quotes = await this.loadQuotes()

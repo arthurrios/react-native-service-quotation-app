@@ -8,7 +8,7 @@ import { styles } from './styles'
 export interface QuoteItemProps {
   quoteItem: QuoteItem
   shouldEllipseText?: boolean
-  onEditItem: (item: QuoteItem) => void
+  onEditItem?: (item: QuoteItem) => void
 }
 
 export function QuoteItemInfo({
@@ -31,9 +31,11 @@ export function QuoteItemInfo({
         <MoneyLabel size="lg" value={quoteItem.price} />
         <Text style={styles.qtyText}>Qt: {quoteItem.qty}</Text>
       </View>
-      <TouchableOpacity onPress={() => onEditItem(quoteItem)}>
-        <Icon name="edit-pen" size={20} color={colors.purple.base} />
-      </TouchableOpacity>
+      {onEditItem && (
+        <TouchableOpacity onPress={() => onEditItem?.(quoteItem)}>
+          <Icon name="edit-pen" size={20} color={colors.purple.base} />
+        </TouchableOpacity>
+      )}
     </View>
   )
 }

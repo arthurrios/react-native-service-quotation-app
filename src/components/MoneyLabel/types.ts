@@ -1,6 +1,6 @@
-import { TextProps } from 'react-native'
+import { TextProps, TextStyle } from 'react-native'
 
-export type MoneySize = 'sm' | 'md' | 'lg' | 'xl'
+export type MoneySize = 'sm' | 'md' | 'base' | 'lg' | 'xl'
 
 export type MoneyColorVariant = 'default' | 'success' | 'danger'
 
@@ -17,6 +17,8 @@ export interface MoneyLabelProps extends TextProps {
   strikethrough?: boolean
   /** Whether to show the "R$" prefix (default: true) */
   showPrefix?: boolean
+  /** Style for the prefix */
+  prefixStyle?: TextStyle
 }
 
 export interface MoneyLabelStyleProps {

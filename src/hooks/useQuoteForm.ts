@@ -2,9 +2,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { Alert } from 'react-native'
 import { useRadio } from '@/components/Radio/useRadio'
 import { StatusType } from '@/components/Status/types'
-import { mapStatusTypeToQuoteStatus } from '@/data/seed'
+import {
+  mapQuoteStatusToStatusType,
+  mapStatusTypeToQuoteStatus,
+} from '@/data/seed'
 import { StackRoutesProps } from '@/routes/StackRoutes'
-import { QuoteItem } from '@/types/quote'
+import { QuoteDoc, QuoteItem, QuoteStatus } from '@/types/quote'
 import {
   calculateQuoteDiscount,
   calculateQuoteTotal,
@@ -16,24 +19,47 @@ function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2)
 }
 
+interface UseQuoteFormProps {
+  navigation: StackRoutesProps<'quoteForm'>['navigation']
+  quote?: QuoteDoc
+}
+
 export function useQuoteForm({
   navigation,
-}: Pick<StackRoutesProps<'quoteForm'>, 'navigation'>) {
+  quote = undefined,
+}: UseQuoteFormProps) {
   const [isQuoteItemModalOpen, setIsQuoteItemModalOpen] = useState(false)
-  const [title, setTitle] = useState('')
-  const [client, setClient] = useState('')
-  const [discountPct, setDiscountPct] = useState(0)
+  const [title, setTitle] = useState(quote?.title ?? '')
+  const [client, setClient] = useState(quote?.client ?? '')
+  const [discountPct, setDiscountPct] = useState(quote?.discountPct ?? 0)
   const {
     select: selectStatus,
     selectedValue: status,
     isSelected: isStatusSelected,
-  } = useRadio<StatusType>(StatusType.DRAFT)
-  const [items, setItems] = useState<QuoteItem[]>([])
+  } = useRadio<StatusType>(
+    mapQuoteStatusToStatusType(quote?.status as QuoteStatus) ??
+      StatusType.DRAFT,
+  )
+  const [items, setItems] = useState<QuoteItem[]>(quote?.items ?? [])
   const [selectedItem, setSelectedItem] = useState<QuoteItem | null>(null)
   const [hasTitleError, setHasTitleError] = useState(false)
   const [hasClientError, setHasClientError] = useState(false)
   const [hasTouchedTitle, setHasTouchedTitle] = useState(false)
   const [hasTouchedClient, setHasTouchedClient] = useState(false)
+
+  // Update form fields when quote is loaded
+  useEffect(() => {
+    if (quote) {
+      setTitle(quote.title)
+      setClient(quote.client)
+      setDiscountPct(quote.discountPct ?? 0)
+      setItems(quote.items)
+      selectStatus(
+        mapQuoteStatusToStatusType(quote.status as QuoteStatus) ??
+          StatusType.DRAFT,
+      )
+    }
+  }, [quote, selectStatus])
 
   useEffect(() => {
     if (hasTouchedTitle) {

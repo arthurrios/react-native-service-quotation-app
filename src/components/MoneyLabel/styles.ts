@@ -5,13 +5,14 @@ import { MoneyLabelStyleProps, MoneySize } from './types'
 const sizeToTextStyleMap: Record<MoneySize, TextStyle> = {
   sm: textStyles.textXs,
   md: textStyles.textSm,
+  base: textStyles.titleXs,
   lg: textStyles.titleMd,
   xl: textStyles.titleLg,
 }
 
 export const colorMap: Record<string, string> = {
   default: colors.gray[700],
-  success: colors.success.base,
+  success: colors.success.dark,
   danger: colors.danger.base,
 }
 

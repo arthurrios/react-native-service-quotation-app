@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { Button, Radio, Status } from '@/components'
 import { Card } from '@/components/Card'
@@ -7,13 +8,20 @@ import { MoneyLabel } from '@/components/MoneyLabel'
 import { QuoteHeader } from '@/components/QuoteHeader'
 import { QuoteItemInfo } from '@/components/QuoteItemInfo'
 import { QuoteItemModal } from '@/components/QuoteItemModal'
+import { QuoteDoc } from '@/data'
+import { storageService } from '@/data/storage'
 import { useQuoteForm } from '@/hooks/useQuoteForm'
 import { calculateQuoteTotal } from '@/hooks/useQuotes'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors } from '@/styles'
 import { styles } from './styles'
 
-export function QuoteForm({ navigation }: StackRoutesProps<'quoteForm'>) {
+export function QuoteForm({
+  navigation,
+  route,
+}: StackRoutesProps<'quoteForm'>) {
+  const [quote, setQuote] = useState<QuoteDoc | null>(null)
+
   const {
     selectStatus,
     isStatusSelected,
@@ -40,10 +48,23 @@ export function QuoteForm({ navigation }: StackRoutesProps<'quoteForm'>) {
     setHasTouchedTitle,
     setHasTouchedClient,
     handleSave,
-  } = useQuoteForm({ navigation })
+  } = useQuoteForm({ navigation, quote: quote ?? undefined })
+
+  useEffect(() => {
+    if (route.params?.quoteId) {
+      async function getQuote() {
+        const quote = await storageService.getQuote(route.params?.quoteId ?? '')
+        if (quote) {
+          setQuote(quote)
+        }
+      }
+      getQuote()
+    }
+  }, [route.params?.quoteId])
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
-      <QuoteHeader onBack={navigation.goBack} />
+      <QuoteHeader onBack={navigation.goBack} quote={quote ?? undefined} />
       <ScrollView contentContainerStyle={{ padding: 20, gap: 20 }}>
         <Card
           icon="shop"

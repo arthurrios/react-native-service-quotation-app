@@ -10,6 +10,7 @@ export function MoneyLabel({
   isNegative: isNegativeProp,
   strikethrough = false,
   showPrefix = true,
+  prefixStyle,
   ...props
 }: MoneyLabelProps) {
   const isNegative = isNegativeProp ?? value < 0
@@ -29,7 +30,7 @@ export function MoneyLabel({
   return (
     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
       {isNegative && <Text style={minus}>- </Text>}
-      {showPrefix && <Text style={prefix}>R$ </Text>}
+      {showPrefix && <Text style={[prefix, prefixStyle]}>R$ </Text>}
       <Text style={[valueStyle, props.style]}>{formattedValue}</Text>
     </View>
   )
