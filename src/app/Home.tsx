@@ -5,6 +5,8 @@ import { FilterModal } from '@/components/FilterModal'
 import { HomeHeader } from '@/components/HomeHeader'
 import { Input } from '@/components/Input'
 import { QuoteCard } from '@/components/QuoteCard'
+import { StatusType } from '@/components/Status/types'
+import { mapStatusTypeToQuoteStatus } from '@/data/seed'
 import { useQuotes } from '@/hooks/useQuotes'
 import { StackRoutesProps } from '@/routes/StackRoutes'
 import { colors, textStyles } from '@/styles'
@@ -41,9 +43,18 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
     )
   }, [filters])
 
+  const draftQuotesCount = useMemo(() => {
+    return quotes.filter(
+      (quote) => quote.status === mapStatusTypeToQuoteStatus(StatusType.DRAFT),
+    ).length
+  }, [quotes])
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
-      <HomeHeader onNewQuote={handleNewQuote} />
+      <HomeHeader
+        onNewQuote={handleNewQuote}
+        draftQuotesCount={draftQuotesCount}
+      />
       <View style={{ paddingVertical: 24, paddingHorizontal: 20, gap: 24 }}>
         <View
           style={{
