@@ -123,13 +123,23 @@ export function useQuoteForm({
       return
     }
     try {
-      await addQuote({
-        title,
-        client,
-        items,
-        status: mapStatusTypeToQuoteStatus(status || StatusType.DRAFT),
-        discountPct,
-      })
+      if (quote) {
+        await updateQuote(quote.id, {
+          title,
+          client,
+          items,
+          status: mapStatusTypeToQuoteStatus(status || StatusType.DRAFT),
+          discountPct,
+        })
+      } else {
+        await addQuote({
+          title,
+          client,
+          items,
+          status: mapStatusTypeToQuoteStatus(status || StatusType.DRAFT),
+          discountPct,
+        })
+      }
       Alert.alert('Sucesso', 'Cotação salva com sucesso', [
         { text: 'OK', style: 'cancel' },
       ])
