@@ -240,7 +240,7 @@ export const seedQuotes: QuoteDoc[] = [
   {
     id: '6',
     client: 'UI/UX Designers',
-    title: 'Design de interface',
+    title: 'UI Design',
     items: [
       {
         id: '6-1',
